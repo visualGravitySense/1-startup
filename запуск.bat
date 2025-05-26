@@ -1,0 +1,9 @@
+@echo off
+echo Starting Product Owner Project...
+echo.
+echo Opening planned project in default browser...
+start index.html
+echo.
+echo Project opened in browser!
+echo Press any key to close...
+pause >nul 

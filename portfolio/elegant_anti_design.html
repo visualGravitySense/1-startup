@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAOS/ELEGANT</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=Courier+Prime:ital,wght@0,400;1,400&display=swap');
+        
+        :root {
+            --primary: #1a1a1a;
+            --accent: #ff6b35;
+            --subtle: #f8f8f8;
+            --chaos: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* Elegant chaos navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(2deg) scale(1.05);
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            padding: 10px 0;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-2px);
+            color: var(--accent);
+        }
+
+        /* Elegant hero with subtle chaos */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 400;
+            line-height: 0.9;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .hero h1 .word-1 {
+            display: inline-block;
+            transform: rotate(-1deg);
+            color: var(--primary);
+        }
+
+        .hero h1 .word-2 {
+            display: inline-block;
+            transform: rotate(1deg);
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero h1 .word-3 {
+            display: inline-block;
+            transform: rotate(-0.5deg);
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.7em;
+            vertical-align: super;
+        }
+
+        .hero p {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Elegant button with chaos */
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            transform: rotate(-1deg);
+        }
+
+        .cta-button:hover {
+            transform: rotate(1deg) scale(1.05);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--chaos);
+            transition: left 0.4s ease;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        /* Floating elements - elegant chaos */
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: -1s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: -3s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Elegant sections with subtle chaos */
+        .section {
+            padding: 100px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 2px;
+            background: var(--accent);
+            transform: rotate(-1deg);
+        }
+
+        .chaos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .chaos-card {
+            background: white;
+            padding: 40px;
+            border-radius: 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            transform: rotate(0deg);
+        }
+
+        .chaos-card:nth-child(odd) {
+            transform: rotate(1deg);
+        }
+
+        .chaos-card:nth-child(even) {
+            transform: rotate(-1deg);
+        }
+
+        .chaos-card:hover {
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .chaos-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .chaos-card p {
+            font-weight: 300;
+            line-height: 1.7;
+            opacity: 0.8;
+        }
+
+        /* Elegant typography chaos */
+        .typography-section {
+            background: var(--subtle);
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .mixed-fonts {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            color: var(--primary);
+            transform: rotate(-2deg);
+        }
+
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+            font-size: 32px;
+            font-weight: 300;
+            color: var(--accent);
+        }
+
+        .font-courier {
+            font-family: 'Courier Prime', monospace;
+            font-size: 24px;
+            color: var(--chaos);
+            transform: rotate(1deg);
+        }
+
+        /* Elegant footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 80px 50px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 30px;
+            transform: rotate(-1deg);
+            display: inline-block;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            transform: rotate(0deg);
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: rotate(-5deg) scale(1.1);
+        }
+
+        /* Subtle animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive elegance */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .section {
+                padding: 60px 20px;
+            }
+            
+            .mixed-fonts {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Elegant cursor effects */
+        .cursor-chaos {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            opacity: 0;
+        }
+
+        /* Interactive elements */
+        .interactive-text {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .interactive-text:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-chaos"></div>
+
+    <nav>
+        <div class="logo">CHAOS/ELEGANT</div>
+        <ul class="nav-links">
+            <li><a href="#" class="interactive-text">Home</a></li>
+            <li><a href="#" class="interactive-text">About</a></li>
+            <li><a href="#" class="interactive-text">Work</a></li>
+            <li><a href="#" class="interactive-text">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="floating-element">○</div>
+        <div class="floating-element">△</div>
+        <div class="floating-element">□</div>
+        
+        <div class="hero-content fade-in">
+            <h1>
+                <span class="word-1">Beautiful</span>
+                <span class="word-2">Chaos</span>
+                <span class="word-3">™</span>
+            </h1>
+            <p>Where elegant design meets intentional disorder. Creating digital experiences that challenge conventions while maintaining sophisticated aesthetics.</p>
+            <a href="#" class="cta-button">Explore the Chaos</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title fade-in">Our Philosophy</h2>
+        <div class="chaos-grid">
+            <div class="chaos-card fade-in">
+                <h3>Controlled Disorder</h3>
+                <p>We believe that perfect imperfection creates the most memorable experiences. Our designs embrace calculated chaos while maintaining visual harmony and user functionality.</p>
+            </div>
+            <div class="chaos-card fade-in">
+                <h3>Elegant Rebellion</h3>
+                <p>Breaking design rules doesn't mean breaking aesthetics. We rebel against convention while respecting the fundamental principles of beauty and usability.</p>
+            </div>
+            <div class="chaos-card fade-in">
+                <h3>Sophisticated Unpredictability</h3>
+                <p>Surprise and delight users with unexpected elements that feel intentional rather than accidental. Every chaotic element serves a purpose in the greater design narrative.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="typography-section">
+        <h2 class="section-title fade-in">Typography in Chaos</h2>
+        <p class="fade-in">Mixing fonts isn't always wrong when done with intention and restraint.</p>
+        <div class="mixed-fonts fade-in">
+            <span class="font-playfair">Elegance</span>
+            <span class="font-inter">meets</span>
+            <span class="font-courier">disorder</span>
+        </div>
+        <p class="fade-in interactive-text">Click, hover, and explore. Every element tells a story of beautiful rebellion.</p>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3 class="footer-title">Let's Create Chaos Together</h3>
+            <p>Ready to challenge design conventions while maintaining elegance?</p>
+            <div class="social-links">
+                <a href="#">Behance</a>
+                <a href="#">Dribbble</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+            </div>
+            <p style="margin-top: 40px; opacity: 0.6; font-size: 14px;">
+                © 2024 Chaos/Elegant Studio. All rights beautifully disordered.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Elegant cursor effect
+        const cursor = document.querySelector('.cursor-chaos');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.opacity = '1';
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0.2s';
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Interactive text effects
+        document.querySelectorAll('.interactive-text').forEach(el => {
+            el.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Floating elements random movement
+        document.querySelectorAll('.floating-element').forEach((el, index) => {
+            setInterval(() => {
+                const randomX = Math.random() * 20 - 10;
+                const randomY = Math.random() * 20 - 10;
+                el.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${Math.random() * 10 - 5}deg)`;
+            }, 3000 + index * 1000);
+        });
+
+        // Subtle page background color shift
+        let hue = 0;
+        setInterval(() => {
+            hue = (hue + 0.1) % 360;
+            document.body.style.filter = `hue-rotate(${hue}deg)`;
+        }, 100);
+    </script>
+</body>
+</html>
