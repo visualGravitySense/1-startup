@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Blog | EdTech Revolution Journey</title>
+    <meta name="description" content="Follow the real-time development journey of an EdTech platform from market research to MVP. Product Owner insights, automation stories, and startup lessons.">
+    <meta name="keywords" content="EdTech Blog, Product Development, Startup Journey, MVP Development, Market Research, Product Owner Blog">
+    <meta name="author" content="EdTech Revolution">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="Development Blog | EdTech Revolution Journey">
+    <meta property="og:description" content="Follow the real-time development journey of an EdTech platform from market research to MVP">
+    <meta property="og:image" content="">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="">
+    <meta property="twitter:title" content="Development Blog | EdTech Revolution Journey">
+    <meta property="twitter:description" content="Follow the real-time development journey of an EdTech platform from market research to MVP">
+    <meta property="twitter:image" content="">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap');
+        
+        :root {
+            --primary: #1a1a1a;
+            --accent: #6366f1;
+            --secondary: #f59e0b;
+            --subtle: #fafafa;
+            --chaos: #10b981;
+            --elegant-gray: #6b7280;
+            --soft-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #fafafa 0%, #f8fafc 100%);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.85);
+            padding: 25px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            transform: rotate(-1.5deg);
+            transition: all 0.4s ease;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            transform: rotate(1.5deg) scale(1.05);
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 300;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 12px 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            transform: rotate(-1deg);
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-3px);
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Blog Header */
+        .blog-header {
+            padding: 150px 60px 80px;
+            text-align: center;
+            background: linear-gradient(135deg, #fafafa 0%, #f1f5f9 50%, #e2e8f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 400;
+            margin-bottom: 30px;
+            transform: rotate(-1deg);
+            color: var(--primary);
+        }
+
+        .blog-header p {
+            font-size: clamp(18px, 3vw, 24px);
+            font-weight: 300;
+            opacity: 0.85;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Blog Content */
+        .blog-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 60px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 80px;
+        }
+
+        .posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        /* Blog Post Card */
+        .blog-post {
+            background: var(--soft-white);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .blog-post:nth-child(odd) {
+            transform: rotate(0.5deg);
+        }
+
+        .blog-post:nth-child(even) {
+            transform: rotate(-0.5deg);
+        }
+
+        .blog-post:hover {
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--elegant-gray);
+        }
+
+        .post-date {
+            background: var(--accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            transform: rotate(-2deg);
+        }
+
+        .post-category {
+            background: var(--secondary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            transform: rotate(1deg);
+        }
+
+        .post-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .post-excerpt {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.7;
+            opacity: 0.85;
+            margin-bottom: 30px;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tag {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            transform: translateX(5px);
+        }
+
+        .read-more i {
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .sidebar-widget {
+            background: var(--soft-white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transform: rotate(1deg);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-widget:hover {
+            transform: rotate(0deg);
+        }
+
+        .widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--primary);
+        }
+
+        .recent-posts {
+            list-style: none;
+        }
+
+        .recent-posts li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .recent-posts li:last-child {
+            border-bottom: none;
+        }
+
+        .recent-posts a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .recent-posts a:hover {
+            color: var(--accent);
+        }
+
+        .recent-date {
+            font-size: 12px;
+            color: var(--elegant-gray);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Stats Widget */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 15px;
+            color: white;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Newsletter */
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .newsletter-input {
+            padding: 15px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .newsletter-btn {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 60px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+            
+            .nav-links {
+                gap: 30px;
+            }
+            
+            .blog-header {
+                padding: 120px 30px 60px;
+            }
+            
+            .blog-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 60px 30px;
+            }
+            
+            .blog-post {
+                padding: 30px;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+
+        /* Loading Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">EdTech/App</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Blog Header -->
+    <section class="blog-header">
+        <h1 class="fade-in">Development Journey</h1>
+        <p class="fade-in">Real-time insights from building an EdTech platform from scratch. Product strategy, market research, and startup lessons learned along the way.</p>
+    </section>
+
+    <!-- Blog Content -->
+    <main class="blog-content">
+        <div class="posts-container">
+            <!-- Blog Post 1 -->
+            <article class="blog-post fade-in">
+                <div class="post-meta">
+                    <span class="post-date">Day 3</span>
+                    <span class="post-category">Content</span>
+                </div>
+                <h2 class="post-title">📝 Создание блога для EdTech проекта - документируем путь к успеху</h2>
+                <p class="post-excerpt">
+                    После двух дней активной работы создал полноценный блог для документирования процесса разработки EdTech платформы. Элегантный дизайн, модальные окна, виджеты статистики и SEO-оптимизация - все для профессиональной презентации проекта.
+                </p>
+                <div class="post-tags">
+                    <span class="tag">Blog</span>
+                    <span class="tag">Content Marketing</span>
+                    <span class="tag">Web Development</span>
+                    <span class="tag">Documentation</span>
+                </div>
+                <a href="#" class="read-more" onclick="showPost('day3')">
+                    Read Full Story <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="blog-post fade-in">
+                <div class="post-meta">
+                    <span class="post-date">Day 2</span>
+                    <span class="post-category">Automation</span>
+                </div>
+                <h2 class="post-title">🤖 Автоматизация исследования рынка - от хаоса к системе</h2>
+                <p class="post-excerpt">
+                    Вчера выбрал нишу "Soft Skills for Tech Professionals", сегодня создал полную систему автоматизации для отслеживания интервью. Вместо ручного учета в блокноте получил профессиональную систему с Firebase и автоматической аналитикой.
+                </p>
+                <div class="post-tags">
+                    <span class="tag">Firebase</span>
+                    <span class="tag">Automation</span>
+                    <span class="tag">Customer Development</span>
+                    <span class="tag">MVP</span>
+                </div>
+                <a href="#" class="read-more" onclick="showPost('day2')">
+                    Read Full Story <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="blog-post fade-in">
+                <div class="post-meta">
+                    <span class="post-date">Day 1</span>
+                    <span class="post-category">Strategy</span>
+                </div>
+                <h2 class="post-title">🎯 Выбор ниши: от хаоса к фокусу</h2>
+                <p class="post-excerpt">
+                    Первый день проекта. Анализ 15+ ниш, создание системы быстрого выбора и финальное решение - "Soft Skills for Tech Professionals". Почему именно эта ниша и как я пришел к этому выбору.
+                </p>
+                <div class="post-tags">
+                    <span class="tag">Market Research</span>
+                    <span class="tag">Niche Selection</span>
+                    <span class="tag">Strategy</span>
+                    <span class="tag">EdTech</span>
+                </div>
+                <a href="#" class="read-more" onclick="showPost('day1')">
+                    Read Full Story <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <!-- Placeholder for future posts -->
+            <article class="blog-post fade-in" style="opacity: 0.6;">
+                <div class="post-meta">
+                    <span class="post-date">Day 3</span>
+                    <span class="post-category">Research</span>
+                </div>
+                <h2 class="post-title">🔍 Первые интервью: инсайты и открытия</h2>
+                <p class="post-excerpt">
+                    Coming soon... Результаты первых интервью с программистами о их потребностях в soft skills. Неожиданные открытия и валидация гипотез.
+                </p>
+                <div class="post-tags">
+                    <span class="tag">Customer Interviews</span>
+                    <span class="tag">Validation</span>
+                    <span class="tag">Insights</span>
+                </div>
+                <a href="#" class="read-more" style="opacity: 0.5;">
+                    Coming Soon <i class="fas fa-clock"></i>
+                </a>
+            </article>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Recent Posts Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Recent Posts</h3>
+                <ul class="recent-posts">
+                    <li>
+                        <a href="#" onclick="showPost('day3')">📝 Создание блога для EdTech проекта</a>
+                        <div class="recent-date">Day 3 • Content</div>
+                    </li>
+                    <li>
+                        <a href="#" onclick="showPost('day2')">🤖 Автоматизация исследования рынка</a>
+                        <div class="recent-date">Day 2 • Automation</div>
+                    </li>
+                    <li>
+                        <a href="#" onclick="showPost('day1')">🎯 Выбор ниши: от хаоса к фокусу</a>
+                        <div class="recent-date">Day 1 • Strategy</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Project Stats Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Project Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Days Active</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Files Created</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">Interviews</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">$50K</span>
+                        <span class="stat-label">Goal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Follow the Journey</h3>
+                <p style="margin-bottom: 20px; font-size: 14px; opacity: 0.8;">Get daily updates on the EdTech platform development</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p style="font-family: 'JetBrains Mono', monospace; opacity: 0.7;">
+            © 2024 EdTech Revolution. Building the future of education, one day at a time.
+        </p>
+    </footer>
+
+    <!-- Post Modal (for full post view) -->
+    <div id="postModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; padding: 40px; overflow-y: auto;">
+        <div style="max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; padding: 60px; position: relative;">
+            <button onclick="closePost()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+            <div id="postContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.animationDelay = '0s';
+                        entry.target.classList.add('fade-in');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Post content
+        const posts = {
+            day3: `
+                <h1>📝 День 3: Создание блога для EdTech проекта - документируем путь к успеху</h1>
+                <div style="margin: 20px 0; color: #6b7280; font-family: 'JetBrains Mono', monospace;">Day 3 • Content • 5 min read</div>
+                
+                <h2>🎯 Что было сделано сегодня</h2>
+                <p>После двух дней активной работы над выбором ниши и автоматизацией исследования рынка, решил создать блог для документирования всего процесса разработки EdTech платформы.</p>
+                
+                <h2>🔥 Главное достижение дня</h2>
+                <p>Создал <strong>полноценный блог</strong> для EdTech проекта с современным дизайном и функциональностью:</p>
+                
+                <h3>✨ Ключевые особенности блога:</h3>
+                <ul>
+                    <li><strong>Элегантный дизайн</strong> в стиле основной страницы</li>
+                    <li><strong>Адаптивная верстка</strong> для всех устройств</li>
+                    <li><strong>Модальные окна</strong> для чтения полных постов</li>
+                    <li><strong>Боковая панель</strong> с виджетами и статистикой</li>
+                    <li><strong>Анимации</strong> и интерактивные элементы</li>
+                    <li><strong>SEO-оптимизация</strong> с мета-тегами</li>
+                </ul>
+                
+                <h2>📊 Структура блога</h2>
+                <p>Создал полноценную систему с навигацией, карточками постов, боковой панелью с виджетами Recent Posts, Project Stats и Newsletter Subscription.</p>
+                
+                <h2>🎯 Практическая ценность</h2>
+                <p>Блог служит не только для документирования процесса, но и как инструмент для:</p>
+                <ul>
+                    <li><strong>Привлечения аудитории</strong> заинтересованной в EdTech</li>
+                    <li><strong>Демонстрации экспертизы</strong> в Product Management</li>
+                    <li><strong>SEO-продвижения</strong> основного проекта</li>
+                    <li><strong>Создания портфолио</strong> живого кейса разработки</li>
+                </ul>
+                
+                <h2>💡 Главный инсайт дня</h2>
+                <p><strong>Документирование процесса в реальном времени</strong> не только помогает структурировать мысли, но и создает ценный контент для привлечения аудитории. Блог становится не просто дневником, а инструментом маркетинга и демонстрации экспертизы.</p>
+                
+                <p><em>P.S. Блог готов! Теперь каждый день буду документировать прогресс в создании EdTech платформы. Следите за обновлениями!</em></p>
+            `,
+            day2: `
+                <h1>🤖 День 2: Автоматизация исследования рынка - от хаоса к системе</h1>
+                <div style="margin: 20px 0; color: #6b7280; font-family: 'JetBrains Mono', monospace;">Day 2 • Automation • 4 min read</div>
+                
+                <h2>🎯 Что было сделано сегодня</h2>
+                <p>Вчера я выбрал нишу <strong>"Soft Skills for Tech Professionals"</strong> и создал план исследования. Сегодня решил не тратить время на ручной учет и сразу автоматизировать весь процесс отслеживания интервью.</p>
+                
+                <h2>🔥 Главное достижение дня</h2>
+                <p>Создал <strong>полную систему автоматизации</strong> для исследования рынка с двумя вариантами:</p>
+                
+                <h3>1. Простая версия (рекомендую)</h3>
+                <ul>
+                    <li><strong>Файл:</strong> simple-tracker.html</li>
+                    <li>✅ Работает сразу в браузере</li>
+                    <li>✅ Не требует установки</li>
+                    <li>✅ Данные сохраняются локально</li>
+                    <li>✅ Полный функционал за 30 секунд</li>
+                </ul>
+                
+                <h3>2. Продвинутая версия</h3>
+                <ul>
+                    <li><strong>Firebase + веб-интерфейс</strong></li>
+                    <li>✅ Облачная синхронизация</li>
+                    <li>✅ Расширенная аналитика</li>
+                    <li>✅ Профессиональный уровень</li>
+                </ul>
+                
+                <h2>💡 Главный инсайт дня</h2>
+                <p><strong>Автоматизация с самого начала</strong> экономит огромное количество времени и дает качественные данные для принятия решений. Вместо того чтобы тратить время на ручной учет, можно сфокусироваться на самом важном - общении с потенциальными клиентами.</p>
+                
+                <p><em>P.S. Система готова к использованию. Завтра начинаю собирать реальные данные о рынке soft skills для программистов!</em></p>
+            `,
+            day1: `
+                <h1>🎯 День 1: Выбор ниши - от хаоса к фокусу</h1>
+                <div style="margin: 20px 0; color: #6b7280; font-family: 'JetBrains Mono', monospace;">Day 1 • Strategy • 3 min read</div>
+                
+                <h2>🚀 Начало проекта</h2>
+                <p>Первый день амбициозного проекта - создать EdTech платформу за 3 месяца от исследования рынка до готового MVP с целью привлечь $50K краудфандинга.</p>
+                
+                <h2>🎯 Процесс выбора ниши</h2>
+                <p>Проанализировал 15+ потенциальных ниш в образовании:</p>
+                <ul>
+                    <li>Soft Skills для программистов</li>
+                    <li>Финансовая грамотность для подростков</li>
+                    <li>Изучение языков через игры</li>
+                    <li>Профориентация для школьников</li>
+                    <li>И многие другие...</li>
+                </ul>
+                
+                <h2>✅ Финальный выбор</h2>
+                <p><strong>"Soft Skills for Tech Professionals"</strong> - эта ниша выиграла по всем критериям:</p>
+                <ul>
+                    <li>🎯 Четкая целевая аудитория</li>
+                    <li>💰 Готовность платить</li>
+                    <li>📈 Растущий рынок</li>
+                    <li>🔍 Легко найти для интервью</li>
+                    <li>⚡ Быстрая валидация</li>
+                </ul>
+                
+                <h2>📋 Что создал</h2>
+                <p>Систему быстрого выбора ниши с четкими критериями оценки, которую можно использовать для любого проекта.</p>
+                
+                <p><em>Завтра начинаю создавать систему автоматизации для исследования рынка!</em></p>
+            `
+        };
+
+        function showPost(postId) {
+            const modal = document.getElementById('postModal');
+            const content = document.getElementById('postContent');
+            content.innerHTML = posts[postId] || '<p>Post not found</p>';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePost() {
+            const modal = document.getElementById('postModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        document.getElementById('postModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePost();
+            }
+        });
+
+        // Newsletter form
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thanks for subscribing! You\'ll get updates on the EdTech development journey.');
+            this.reset();
+        });
+    </script>
+</body>
+</html> 

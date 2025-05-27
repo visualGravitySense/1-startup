@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Interview Tracker - Soft Skills для программистов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: white;
+            color: #4facfe;
+            border-bottom: 3px solid #4facfe;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .contact-list {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-info h4 {
+            margin-bottom: 5px;
+            color: #495057;
+        }
+
+        .contact-info p {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-found { background: #e3f2fd; color: #1976d2; }
+        .status-contacted { background: #fff3e0; color: #f57c00; }
+        .status-responded { background: #e8f5e8; color: #388e3c; }
+        .status-interviewed { background: #f3e5f5; color: #7b1fa2; }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Interview Tracker</h1>
+            <p>Система отслеживания интервью для ниши "Soft Skills for Tech Professionals"</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('dashboard')">📈 Дашборд</button>
+            <button class="tab" onclick="showTab('contacts')">👥 Контакты</button>
+            <button class="tab" onclick="showTab('interviews')">🎤 Интервью</button>
+            <button class="tab" onclick="showTab('metrics')">📊 Метрики</button>
+        </div>
+
+        <div class="content">
+            <!-- ДАШБОРД -->
+            <div id="dashboard" class="tab-content active">
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <h3 id="totalContacts">0</h3>
+                        <p>Всего контактов</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="totalInterviews">0</h3>
+                        <p>Проведено интервью</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="responseRate">0%</h3>
+                        <p>Процент ответов</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="conversionRate">0%</h3>
+                        <p>Конверсия в интервью</p>
+                    </div>
+                </div>
+
+                <div class="contact-list">
+                    <h3>📋 Последние действия</h3>
+                    <div id="recentActivity">
+                        <div class="loading">Загрузка данных...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- КОНТАКТЫ -->
+            <div id="contacts" class="tab-content">
+                <h2>👥 Управление контактами</h2>
+                
+                <form id="contactForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Имя</label>
+                            <input type="text" id="contactName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Платформа</label>
+                            <select id="contactPlatform" required>
+                                <option value="">Выберите платформу</option>
+                                <option value="telegram">Telegram</option>
+                                <option value="linkedin">LinkedIn</option>
+                                <option value="discord">Discord</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="contactUsername">
+                        </div>
+                        <div class="form-group">
+                            <label>Роль</label>
+                            <input type="text" id="contactRole" placeholder="Frontend Developer">
+                        </div>
+                        <div class="form-group">
+                            <label>Опыт (лет)</label>
+                            <input type="number" id="contactExperience" min="0" max="30">
+                        </div>
+                        <div class="form-group">
+                            <label>Компания</label>
+                            <input type="text" id="contactCompany">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Источник (где нашли)</label>
+                        <input type="text" id="contactSource" placeholder="@frontend_ru">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Заметки</label>
+                        <textarea id="contactNotes" rows="3"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">➕ Добавить контакт</button>
+                </form>
+
+                <div class="contact-list">
+                    <h3>📋 Список контактов</h3>
+                    <div id="contactsList">
+                        <div class="loading">Загрузка контактов...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ИНТЕРВЬЮ -->
+            <div id="interviews" class="tab-content">
+                <h2>🎤 Запись интервью</h2>
+                
+                <form id="interviewForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Контакт</label>
+                            <select id="interviewContact" required>
+                                <option value="">Выберите контакт</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Дата интервью</label>
+                            <input type="date" id="interviewDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Длительность (минут)</label>
+                            <input type="number" id="interviewDuration" min="1" max="120">
+                        </div>
+                        <div class="form-group">
+                            <label>Формат</label>
+                            <select id="interviewFormat">
+                                <option value="zoom">Zoom</option>
+                                <option value="telegram">Telegram</option>
+                                <option value="discord">Discord</option>
+                                <option value="written">Письменно</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3>📋 Ответы на вопросы</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Частота презентаций</label>
+                            <select id="presentationFreq">
+                                <option value="never">Никогда</option>
+                                <option value="rarely">Редко</option>
+                                <option value="monthly">Раз в месяц</option>
+                                <option value="weekly">Еженедельно</option>
+                                <option value="daily">Ежедневно</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Готовность платить</label>
+                            <select id="willingToPay">
+                                <option value="">Выберите</option>
+                                <option value="true">Да</option>
+                                <option value="false">Нет</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ценовой диапазон</label>
+                            <select id="priceRange">
+                                <option value="">Не указано</option>
+                                <option value="$29">$29</option>
+                                <option value="$49">$49</option>
+                                <option value="$99">$99</option>
+                                <option value="$150+">$150+</option>
+                                <option value="not_willing">Не готов платить</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Качество интервью</label>
+                            <select id="interviewQuality">
+                                <option value="excellent">Отличное</option>
+                                <option value="good">Хорошее</option>
+                                <option value="average">Среднее</option>
+                                <option value="poor">Плохое</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ключевые инсайты (через запятую)</label>
+                        <textarea id="keyInsights" rows="3" placeholder="Нужны шаблоны презентаций, Сложно объяснять техническое нетехническим"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Болевые точки (через запятую)</label>
+                        <textarea id="painPoints" rows="3" placeholder="Страх публичных выступлений, Нет структуры в презентациях"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Цитаты</label>
+                        <textarea id="quotes" rows="3" placeholder="Важные высказывания интервьюируемого"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">💾 Сохранить интервью</button>
+                </form>
+            </div>
+
+            <!-- МЕТРИКИ -->
+            <div id="metrics" class="tab-content">
+                <h2>📊 Ежедневные метрики</h2>
+                
+                <form id="metricsForm">
+                    <div class="form-group">
+                        <label>Дата</label>
+                        <input type="date" id="metricsDate" required>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                        <div class="form-group">
+                            <label>Найдено групп</label>
+                            <input type="number" id="groupsFound" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Найдено контактов</label>
+                            <input type="number" id="contactsFound" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Отправлено сообщений</label>
+                            <input type="number" id="messagesSent" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Получено ответов</label>
+                            <input type="number" id="responsesReceived" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Запланировано интервью</label>
+                            <input type="number" id="interviewsScheduled" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Проведено интервью</label>
+                            <input type="number" id="interviewsCompleted" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Время потрачено (минут)</label>
+                        <input type="number" id="timeSpent" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Заметки</label>
+                        <textarea id="metricsNotes" rows="3"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">📈 Сохранить метрики</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+    
+    <script>
+        // Firebase конфигурация
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYV9WGP9JItX-vZL6sYMkoxAnLXq0pmCg",
+            authDomain: "main-management-572b0.firebaseapp.com",
+            projectId: "main-management-572b0",
+            storageBucket: "main-management-572b0.firebasestorage.app",
+            messagingSenderId: "1081305439096",
+            appId: "1:1081305439096:web:0b7bdcc3f8f0ddc900068d",
+            measurementId: "G-2T7T34TSMF"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const analytics = firebase.analytics();
+
+        // Система отслеживания интервью
+        class InterviewTracker {
+            constructor() {
+                this.db = db;
+            }
+
+            async addContact(contactData) {
+                try {
+                    const contact = {
+                        ...contactData,
+                        status: 'found',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+
+                    const docRef = await this.db.collection('contacts').add(contact);
+                    console.log('✅ Контакт добавлен:', docRef.id);
+                    return docRef.id;
+                } catch (error) {
+                    console.error('❌ Ошибка добавления контакта:', error);
+                    throw error;
+                }
+            }
+
+            async recordInterview(contactId, interviewData) {
+                try {
+                    const interview = {
+                        ...interviewData,
+                        contactId: contactId,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+
+                    const docRef = await this.db.collection('interviews').add(interview);
+                    
+                    // Обновляем статус контакта
+                    await this.updateContactStatus(contactId, 'interviewed');
+
+                    console.log('✅ Интервью записано:', docRef.id);
+                    return docRef.id;
+                } catch (error) {
+                    console.error('❌ Ошибка записи интервью:', error);
+                    throw error;
+                }
+            }
+
+            async recordDailyMetrics(date, metrics) {
+                try {
+                    const dailyMetrics = {
+                        date: date,
+                        ...metrics,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+
+                    const docRef = await this.db.collection('daily_metrics').add(dailyMetrics);
+                    console.log('✅ Метрики записаны:', docRef.id);
+                    return docRef.id;
+                } catch (error) {
+                    console.error('❌ Ошибка записи метрик:', error);
+                    throw error;
+                }
+            }
+
+            async updateContactStatus(contactId, newStatus) {
+                try {
+                    await this.db.collection('contacts').doc(contactId).update({
+                        status: newStatus,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log('✅ Статус обновлен:', contactId, '->', newStatus);
+                } catch (error) {
+                    console.error('❌ Ошибка обновления статуса:', error);
+                    throw error;
+                }
+            }
+
+            async getStats() {
+                try {
+                    const contactsSnapshot = await this.db.collection('contacts').get();
+                    const contacts = contactsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                    const interviewsSnapshot = await this.db.collection('interviews').get();
+                    const interviews = interviewsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                    const stats = {
+                        contacts: {
+                            total: contacts.length,
+                            byStatus: this.groupBy(contacts, 'status')
+                        },
+                        interviews: {
+                            total: interviews.length
+                        },
+                        messages: {
+                            responseRate: this.calculateResponseRate(contacts)
+                        },
+                        conversion: {
+                            contactToInterview: this.calculateConversion(contacts, 'interviewed')
+                        }
+                    };
+
+                    return stats;
+                } catch (error) {
+                    console.error('❌ Ошибка получения статистики:', error);
+                    throw error;
+                }
+            }
+
+            groupBy(array, key) {
+                return array.reduce((groups, item) => {
+                    const value = item[key] || 'unknown';
+                    groups[value] = (groups[value] || 0) + 1;
+                    return groups;
+                }, {});
+            }
+
+            calculateConversion(contacts, targetStatus) {
+                const total = contacts.length;
+                const converted = contacts.filter(c => c.status === targetStatus).length;
+                return total > 0 ? (converted / total * 100).toFixed(2) + '%' : '0%';
+            }
+
+            calculateResponseRate(contacts) {
+                const contacted = contacts.filter(c => c.status !== 'found').length;
+                const responded = contacts.filter(c => ['responded', 'interviewed'].includes(c.status)).length;
+                return contacted > 0 ? (responded / contacted * 100).toFixed(2) + '%' : '0%';
+            }
+        }
+
+        // Главное приложение
+        class App {
+            constructor() {
+                this.tracker = new InterviewTracker();
+                this.init();
+            }
+
+            async init() {
+                console.log('🚀 Инициализация приложения...');
+                
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('interviewDate').value = today;
+                document.getElementById('metricsDate').value = today;
+
+                this.bindEvents();
+                await this.loadDashboard();
+                await this.loadContacts();
+            }
+
+            bindEvents() {
+                document.getElementById('contactForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addContact();
+                });
+
+                document.getElementById('interviewForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.recordInterview();
+                });
+
+                document.getElementById('metricsForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.recordMetrics();
+                });
+            }
+
+            async loadDashboard() {
+                try {
+                    const stats = await this.tracker.getStats();
+                    
+                    document.getElementById('totalContacts').textContent = stats.contacts.total;
+                    document.getElementById('totalInterviews').textContent = stats.interviews.total;
+                    document.getElementById('responseRate').textContent = stats.messages.responseRate;
+                    document.getElementById('conversionRate').textContent = stats.conversion.contactToInterview;
+
+                    this.showRecentActivity(stats);
+                } catch (error) {
+                    console.error('❌ Ошибка загрузки дашборда:', error);
+                    this.showError('Ошибка загрузки данных дашборда');
+                }
+            }
+
+            showRecentActivity(stats) {
+                const container = document.getElementById('recentActivity');
+                
+                if (stats.contacts.total === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #6c757d;">Пока нет данных. Добавьте первый контакт!</p>';
+                    return;
+                }
+
+                let html = '<h4>📈 Статистика по статусам:</h4>';
+                
+                Object.entries(stats.contacts.byStatus).forEach(([status, count]) => {
+                    const statusText = {
+                        'found': 'Найдено',
+                        'contacted': 'Связались',
+                        'responded': 'Ответили',
+                        'interviewed': 'Интервью проведено'
+                    };
+                    
+                    html += `
+                        <div class="contact-item">
+                            <div class="contact-info">
+                                <h4>${statusText[status] || status}</h4>
+                                <p>${count} контактов</p>
+                            </div>
+                            <span class="status-badge status-${status}">${count}</span>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            }
+
+            async addContact() {
+                try {
+                    const contactData = {
+                        name: document.getElementById('contactName').value,
+                        platform: document.getElementById('contactPlatform').value,
+                        username: document.getElementById('contactUsername').value,
+                        role: document.getElementById('contactRole').value,
+                        experience: parseInt(document.getElementById('contactExperience').value) || 0,
+                        company: document.getElementById('contactCompany').value,
+                        source: document.getElementById('contactSource').value,
+                        notes: document.getElementById('contactNotes').value,
+                        technologies: []
+                    };
+
+                    await this.tracker.addContact(contactData);
+                    
+                    this.showSuccess('✅ Контакт успешно добавлен!');
+                    document.getElementById('contactForm').reset();
+                    
+                    await this.loadContacts();
+                    await this.loadDashboard();
+                    
+                } catch (error) {
+                    console.error('❌ Ошибка добавления контакта:', error);
+                    this.showError('Ошибка добавления контакта');
+                }
+            }
+
+            async loadContacts() {
+                try {
+                    const stats = await this.tracker.getStats();
+                    const container = document.getElementById('contactsList');
+                    
+                    if (stats.contacts.total === 0) {
+                        container.innerHTML = '<p style="text-align: center; color: #6c757d;">Контакты не найдены</p>';
+                        return;
+                    }
+
+                    let html = '';
+                    Object.entries(stats.contacts.byStatus).forEach(([status, count]) => {
+                        const statusText = {
+                            'found': 'Найдено',
+                            'contacted': 'Связались', 
+                            'responded': 'Ответили',
+                            'interviewed': 'Интервью проведено'
+                        };
+                        
+                        html += `
+                            <div class="contact-item">
+                                <div class="contact-info">
+                                    <h4>${statusText[status] || status}</h4>
+                                    <p>${count} контактов в этом статусе</p>
+                                </div>
+                                <span class="status-badge status-${status}">${status}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    container.innerHTML = html;
+                    
+                } catch (error) {
+                    console.error('❌ Ошибка загрузки контактов:', error);
+                    document.getElementById('contactsList').innerHTML = '<p style="color: red;">Ошибка загрузки контактов</p>';
+                }
+            }
+
+            async recordInterview() {
+                try {
+                    const interviewData = {
+                        date: document.getElementById('interviewDate').value,
+                        duration: parseInt(document.getElementById('interviewDuration').value) || 15,
+                        format: document.getElementById('interviewFormat').value,
+                        answers: {
+                            presentationFrequency: document.getElementById('presentationFreq').value,
+                            willingToPay: document.getElementById('willingToPay').value === 'true',
+                            priceRange: document.getElementById('priceRange').value
+                        },
+                        keyInsights: document.getElementById('keyInsights').value.split(',').map(s => s.trim()).filter(s => s),
+                        painPoints: document.getElementById('painPoints').value.split(',').map(s => s.trim()).filter(s => s),
+                        quotes: document.getElementById('quotes').value.split('\n').filter(s => s.trim()),
+                        quality: document.getElementById('interviewQuality').value
+                    };
+
+                    // Для демо используем фиктивный ID
+                    await this.tracker.recordInterview('demo-contact', interviewData);
+                    
+                    this.showSuccess('✅ Интервью успешно записано!');
+                    document.getElementById('interviewForm').reset();
+                    
+                    await this.loadDashboard();
+                    
+                } catch (error) {
+                    console.error('❌ Ошибка записи интервью:', error);
+                    this.showError('Ошибка записи интервью');
+                }
+            }
+
+            async recordMetrics() {
+                try {
+                    const date = document.getElementById('metricsDate').value;
+                    
+                    const metrics = {
+                        groupsFound: parseInt(document.getElementById('groupsFound').value) || 0,
+                        contactsFound: parseInt(document.getElementById('contactsFound').value) || 0,
+                        messagesSent: parseInt(document.getElementById('messagesSent').value) || 0,
+                        responsesReceived: parseInt(document.getElementById('responsesReceived').value) || 0,
+                        interviewsScheduled: parseInt(document.getElementById('interviewsScheduled').value) || 0,
+                        interviewsCompleted: parseInt(document.getElementById('interviewsCompleted').value) || 0,
+                        timeSpent: parseInt(document.getElementById('timeSpent').value) || 0,
+                        notes: document.getElementById('metricsNotes').value
+                    };
+
+                    await this.tracker.recordDailyMetrics(date, metrics);
+                    
+                    this.showSuccess('✅ Метрики успешно сохранены!');
+                    document.getElementById('metricsForm').reset();
+                    
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    document.getElementById('metricsDate').value = tomorrow.toISOString().split('T')[0];
+                    
+                } catch (error) {
+                    console.error('❌ Ошибка записи метрик:', error);
+                    this.showError('Ошибка записи метрик');
+                }
+            }
+
+            showSuccess(message) {
+                this.showMessage(message, 'success');
+            }
+
+            showError(message) {
+                this.showMessage(message, 'error');
+            }
+
+            showMessage(message, type) {
+                const existingMessages = document.querySelectorAll('.success-message, .error-message');
+                existingMessages.forEach(msg => msg.remove());
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+                messageDiv.textContent = message;
+
+                const activeTab = document.querySelector('.tab-content.active');
+                activeTab.insertBefore(messageDiv, activeTab.firstChild);
+
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 5000);
+            }
+        }
+
+        // Переключение вкладок
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Запуск приложения
+        document.addEventListener('DOMContentLoaded', () => {
+            window.app = new App();
+        });
+    </script>
+</body>
+</html> 

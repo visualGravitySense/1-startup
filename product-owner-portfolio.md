@@ -24,7 +24,7 @@
 - Market opportunity assessment
 - User research insights
 
-### 2. User Research & Persona Development
+### 2. User Research \hn& Persona Development
 **Что покажете:**
 - Customer interviews (10-15 интервью)
 - User journey mapping
