@@ -1,8 +1,124 @@
-# Product Owner Project - EdTech Platform
+# 📊 Interview Tracker - Автоматизация исследования
 
-Modern landing page for a planned Product Owner project on educational platform development.
+Система автоматизации для отслеживания интервью в нише **"Soft Skills for Tech Professionals"**.
 
-## 🚀 Features
+## 🚀 Что это?
+
+Веб-приложение для структурированного сбора и анализа данных интервью с программистами. Помогает:
+
+- ✅ Отслеживать контакты и их статусы
+- ✅ Записывать результаты интервью
+- ✅ Анализировать метрики и конверсии
+- ✅ Собирать инсайты для создания MVP
+
+## 🛠️ Технологии
+
+- **Frontend**: Vanilla JavaScript, HTML5, CSS3
+- **Backend**: Firebase Firestore
+- **Аналитика**: Firebase Analytics
+- **Хостинг**: Firebase Hosting (опционально)
+
+## 📦 Установка
+
+### 1. Клонирование проекта
+```bash
+git clone <repository-url>
+cd interview-tracker
+```
+
+### 2. Установка зависимостей
+```bash
+npm install
+```
+
+### 3. Настройка Firebase
+
+1. Перейдите в [Firebase Console](https://console.firebase.google.com/)
+2. Создайте новый проект или используйте существующий
+3. Включите **Firestore Database**
+4. Включите **Analytics** (опционально)
+5. Скопируйте конфигурацию в `firebase-config.js`
+
+### 4. Запуск приложения
+```bash
+npm start
+```
+
+Приложение будет доступно по адресу: `http://localhost:3000`
+
+## 📋 Структура данных Firebase
+
+### Коллекции:
+
+#### `contacts` - Контакты
+```javascript
+{
+  name: "Иван Петров",
+  platform: "telegram", // telegram, linkedin, discord
+  username: "@ivan_dev",
+  role: "Frontend Developer",
+  experience: 5,
+  company: "Tech Corp",
+  technologies: ["React", "TypeScript"],
+  status: "found", // found, contacted, responded, interviewed
+  source: "@frontend_ru",
+  notes: "Активный участник сообщества",
+  createdAt: timestamp,
+  updatedAt: timestamp
+}
+```
+
+#### `interviews` - Интервью
+```javascript
+{
+  contactId: "contact_id",
+  date: "2024-01-15",
+  duration: 18,
+  format: "zoom",
+  answers: {
+    role: "Frontend Developer",
+    experience: 5,
+    presentationFrequency: "weekly",
+    willingToPay: true,
+    priceRange: "$49"
+  },
+  keyInsights: ["Нужны шаблоны", "Сложно объяснять техническое"],
+  painPoints: ["Страх выступлений", "Нет структуры"],
+  quotes: ["Презентации - это боль"],
+  quality: "excellent",
+  createdAt: timestamp
+}
+```
+
+#### `daily_metrics` - Ежедневные метрики
+```javascript
+{
+  date: "2024-01-15",
+  groupsFound: 5,
+  contactsFound: 8,
+  messagesSent: 10,
+  responsesReceived: 3,
+  interviewsScheduled: 2,
+  interviewsCompleted: 1,
+  timeSpent: 45,
+  notes: "Хороший день",
+  createdAt: timestamp
+}
+```
+
+#### `sent_messages` - Отправленные сообщения
+```javascript
+{
+  contactId: "contact_id",
+  platform: "telegram",
+  template: "direct",
+  messageText: "Привет! Создаю курс...",
+  sentAt: timestamp,
+  status: "sent" // sent, delivered, read, responded
+}
+```
+
+## 🎯 Использование
 
 - **Modern design** with gradients and animations
 - **Fully responsive layout** for all devices
