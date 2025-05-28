@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Многоязычная Автоматизация DigoClasses</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid;
+        }
+
+        .stat-card.russian { border-left-color: #0066cc; }
+        .stat-card.english { border-left-color: #dc3545; }
+        .stat-card.estonian { border-left-color: #28a745; }
+
+        .stat-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .russian .stat-number { color: #0066cc; }
+        .english .stat-number { color: #dc3545; }
+        .estonian .stat-number { color: #28a745; }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .schedule-item.ru { border-left-color: #0066cc; }
+        .schedule-item.en { border-left-color: #dc3545; }
+        .schedule-item.et { border-left-color: #28a745; }
+
+        .language-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .tab.ru { background: #0066cc; color: white; }
+        .tab.en { background: #dc3545; color: white; }
+        .tab.et { background: #28a745; color: white; }
+
+        .tab:hover {
+            opacity: 0.8;
+        }
+
+        .post-preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .post-preview h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .post-preview p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-active { background: #28a745; }
+        .status-pending { background: #ffc107; }
+        .status-error { background: #dc3545; }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .emergency-section {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 30px;
+            text-align: center;
+        }
+
+        .emergency-section h3 {
+            margin-bottom: 15px;
+        }
+
+        .emergency-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        .emergency-btn:hover {
+            background: white;
+            color: #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Многоязычная Автоматизация DigoClasses</h1>
+            <p>Автопостинг на 3 языках: Русский 🇷🇺 • English 🇺🇸 • Eesti 🇪🇪</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card russian">
+                <h3>🇷🇺 Русский рынок</h3>
+                <div class="stat-number">7</div>
+                <p>предзаказов из 10</p>
+                <p><strong>$168</strong> выручка</p>
+            </div>
+            
+            <div class="stat-card english">
+                <h3>🇺🇸 English Market</h3>
+                <div class="stat-number">5</div>
+                <p>pre-orders out of 10</p>
+                <p><strong>$120</strong> revenue</p>
+            </div>
+            
+            <div class="stat-card estonian">
+                <h3>🇪🇪 Eesti Turg</h3>
+                <div class="stat-number">3</div>
+                <p>eeltellimust 10-st</p>
+                <p><strong>$72</strong> tulu</p>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="section">
+                <h2>📅 Расписание постов</h2>
+                
+                <div class="schedule-item ru">
+                    <div>
+                        <strong>🇷🇺 Понедельник 10:00</strong><br>
+                        LinkedIn пост (русский)
+                    </div>
+                    <span class="status-indicator status-active"></span>
+                </div>
+                
+                <div class="schedule-item en">
+                    <div>
+                        <strong>🇺🇸 Понедельник 11:00</strong><br>
+                        LinkedIn post (English)
+                    </div>
+                    <span class="status-indicator status-pending"></span>
+                </div>
+                
+                <div class="schedule-item et">
+                    <div>
+                        <strong>🇪🇪 Понедельник 12:00</strong><br>
+                        LinkedIn postitus (Eesti)
+                    </div>
+                    <span class="status-indicator status-pending"></span>
+                </div>
+                
+                <div class="schedule-item ru">
+                    <div>
+                        <strong>🇷🇺 Вторник 09:00</strong><br>
+                        Telegram пост (русский)
+                    </div>
+                    <span class="status-indicator status-pending"></span>
+                </div>
+                
+                <div class="schedule-item en">
+                    <div>
+                        <strong>🇺🇸 Вторник 10:00</strong><br>
+                        Telegram post (English)
+                    </div>
+                    <span class="status-indicator status-pending"></span>
+                </div>
+                
+                <div class="schedule-item et">
+                    <div>
+                        <strong>🇪🇪 Вторник 11:00</strong><br>
+                        Telegram postitus (Eesti)
+                    </div>
+                    <span class="status-indicator status-pending"></span>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📊 Статистика автоматизации</h2>
+                
+                <div class="post-preview">
+                    <h4>🤖 Статус бота</h4>
+                    <p><span class="status-indicator status-active"></span>Активен и работает</p>
+                    <p><strong>Время работы:</strong> 2 дня 14 часов</p>
+                    <p><strong>Постов отправлено:</strong> 12</p>
+                    <p><strong>Успешность:</strong> 100%</p>
+                </div>
+                
+                <div class="post-preview">
+                    <h4>📈 Эффективность по языкам</h4>
+                    <p>🇷🇺 Русский: 2.3 предзаказа/день</p>
+                    <p>🇺🇸 English: 1.7 pre-orders/day</p>
+                    <p>🇪🇪 Eesti: 1.0 eeltellimus/päev</p>
+                </div>
+                
+                <div class="post-preview">
+                    <h4>💰 Финансовые показатели</h4>
+                    <p><strong>Общая выручка:</strong> $360</p>
+                    <p><strong>Средний чек:</strong> $24</p>
+                    <p><strong>Конверсия:</strong> 3.2%</p>
+                    <p><strong>ROI:</strong> 7,200%</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="section">
+                <h2>📝 Превью контента</h2>
+                
+                <div class="language-tabs">
+                    <div class="tab ru" onclick="showLanguage('ru')">🇷🇺 Русский</div>
+                    <div class="tab en" onclick="showLanguage('en')">🇺🇸 English</div>
+                    <div class="tab et" onclick="showLanguage('et')">🇪🇪 Eesti</div>
+                </div>
+                
+                <div id="content-ru" class="language-content">
+                    <div class="post-preview">
+                        <h4>LinkedIn пост (русский)</h4>
+                        <p>🚀 Реальная история из моей практики: Разработчик: "Нужно отрефакторить legacy код" Менеджер: "Зачем тратить время на то, что работает?" Знакомо?...</p>
+                    </div>
+                </div>
+                
+                <div id="content-en" class="language-content" style="display: none;">
+                    <div class="post-preview">
+                        <h4>LinkedIn post (English)</h4>
+                        <p>🚀 Real story from my practice: Developer: "We need to refactor legacy code" Manager: "Why waste time on something that works?" Sound familiar?...</p>
+                    </div>
+                </div>
+                
+                <div id="content-et" class="language-content" style="display: none;">
+                    <div class="post-preview">
+                        <h4>LinkedIn postitus (Eesti)</h4>
+                        <p>🚀 Tõeline lugu minu praktikast: Arendaja: "Peame legacy koodi refaktoreerima" Juht: "Miks kulutada aega millegi peale, mis töötab?" Tuttav?...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚙️ Управление</h2>
+                
+                <div class="post-preview">
+                    <h4>🔧 Настройки бота</h4>
+                    <button class="btn" onclick="pauseBot()">⏸️ Приостановить</button>
+                    <button class="btn" onclick="resumeBot()">▶️ Возобновить</button>
+                    <button class="btn" onclick="restartBot()">🔄 Перезапустить</button>
+                </div>
+                
+                <div class="post-preview">
+                    <h4>📊 Отчеты</h4>
+                    <button class="btn" onclick="generateReport()">📈 Дневной отчет</button>
+                    <button class="btn" onclick="generateWeeklyReport()">📊 Недельный отчет</button>
+                    <button class="btn" onclick="exportData()">💾 Экспорт данных</button>
+                </div>
+                
+                <div class="post-preview">
+                    <h4>🎯 Цели</h4>
+                    <p><strong>Текущая цель:</strong> 30 предзаказов</p>
+                    <p><strong>Прогресс:</strong> 15/30 (50%)</p>
+                    <p><strong>Осталось дней:</strong> 3</p>
+                    <button class="btn" onclick="updateGoals()">🎯 Обновить цели</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="emergency-section">
+            <h3>🚨 Экстренные действия</h3>
+            <p>Используйте только в критических ситуациях</p>
+            <button class="emergency-btn" onclick="emergencyPost()">📢 Экстренный пост</button>
+            <button class="emergency-btn" onclick="stopAllPosts()">🛑 Остановить все</button>
+            <button class="emergency-btn" onclick="contactSupport()">📞 Связаться с поддержкой</button>
+        </div>
+    </div>
+
+    <script>
+        function showLanguage(lang) {
+            // Скрыть все языковые блоки
+            document.querySelectorAll('.language-content').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Показать выбранный язык
+            document.getElementById('content-' + lang).style.display = 'block';
+            
+            // Обновить активную вкладку
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.style.opacity = '0.7';
+            });
+            document.querySelector('.tab.' + lang).style.opacity = '1';
+        }
+
+        function pauseBot() {
+            alert('🤖 Бот приостановлен на всех языках');
+        }
+
+        function resumeBot() {
+            alert('🤖 Бот возобновил работу на всех языках');
+        }
+
+        function restartBot() {
+            alert('🔄 Многоязычный бот перезапускается...');
+        }
+
+        function generateReport() {
+            alert('📊 Генерируется многоязычный отчет...');
+        }
+
+        function generateWeeklyReport() {
+            alert('📈 Создается недельный отчет по всем языкам...');
+        }
+
+        function exportData() {
+            alert('💾 Экспортируются данные по всем языкам...');
+        }
+
+        function updateGoals() {
+            alert('🎯 Обновляются цели для всех рынков...');
+        }
+
+        function emergencyPost() {
+            const message = prompt('Введите текст экстренного поста:');
+            if (message) {
+                alert('📢 Экстренный пост отправляется на всех языках!');
+            }
+        }
+
+        function stopAllPosts() {
+            if (confirm('Вы уверены, что хотите остановить все посты на всех языках?')) {
+                alert('🛑 Все автопосты остановлены');
+            }
+        }
+
+        function contactSupport() {
+            alert('📞 Открывается чат с поддержкой...');
+        }
+
+        // Автообновление статистики каждые 30 секунд
+        setInterval(() => {
+            console.log('🔄 Обновление многоязычной статистики...');
+        }, 30000);
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🌍 Многоязычная панель управления загружена');
+            showLanguage('ru');
+        });
+    </script>
+</body>
+</html> 
