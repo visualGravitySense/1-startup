@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель предзаказов - CodeTalk</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --accent: #6366f1;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --gray: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--light);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .header .subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-left: 4px solid var(--accent);
+        }
+
+        .stat-card.success {
+            border-left-color: var(--success);
+        }
+
+        .stat-card.warning {
+            border-left-color: var(--secondary);
+        }
+
+        .stat-card.danger {
+            border-left-color: var(--danger);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card.success .stat-number {
+            color: var(--success);
+        }
+
+        .stat-card.warning .stat-number {
+            color: var(--secondary);
+        }
+
+        .stat-card.danger .stat-number {
+            color: var(--danger);
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .preorders-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .refresh-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: #5856eb;
+        }
+
+        .preorders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .preorders-table th,
+        .preorders-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .preorders-table th {
+            background: var(--light);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .preorders-table tr:hover {
+            background: var(--light);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-preorder {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+        }
+
+        .loading i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .goal-progress {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--success), var(--accent));
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .preorders-table {
+                font-size: 0.875rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 Панель предзаказов</h1>
+            <p class="subtitle">Курс "Как объяснять код бизнесу"</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card success">
+                <span class="stat-number" id="totalPreorders">-</span>
+                <span class="stat-label">Всего предзаказов</span>
+            </div>
+            
+            <div class="stat-card warning">
+                <span class="stat-number" id="totalRevenue">$-</span>
+                <span class="stat-label">Общая выручка</span>
+            </div>
+            
+            <div class="stat-card">
+                <span class="stat-number" id="avgExperience">-</span>
+                <span class="stat-label">Средний опыт</span>
+            </div>
+            
+            <div class="stat-card danger">
+                <span class="stat-number" id="daysLeft">5</span>
+                <span class="stat-label">Дней до конца акции</span>
+            </div>
+        </div>
+
+        <!-- Goal Progress -->
+        <div class="preorders-section">
+            <h3>🎯 Прогресс к цели</h3>
+            <div class="goal-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="goalProgress"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Цель: 10 предзаказов</span>
+                    <span id="goalText">0 / 10</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preorders List -->
+        <div class="preorders-section">
+            <div class="section-header">
+                <h3 class="section-title">📋 Список предзаказов</h3>
+                <button class="refresh-btn" onclick="loadPreorders()">
+                    <i class="fas fa-sync-alt"></i> Обновить
+                </button>
+            </div>
+
+            <div id="loadingIndicator" class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>Загрузка данных...</p>
+            </div>
+
+            <div id="preordersContainer" style="display: none;">
+                <table class="preorders-table">
+                    <thead>
+                        <tr>
+                            <th>Имя</th>
+                            <th>Email</th>
+                            <th>Опыт</th>
+                            <th>Роль</th>
+                            <th>Дата</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody id="preordersTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="emptyState" style="display: none; text-align: center; padding: 3rem; color: var(--gray);">
+                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                <p>Пока нет предзаказов</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Поделитесь ссылкой на лендинг, чтобы получить первые заказы!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYV9WGP9JItX-vZL6sYMkoxAnLXq0pmCg",
+            authDomain: "main-management-572b0.firebaseapp.com",
+            projectId: "main-management-572b0",
+            storageBucket: "main-management-572b0.firebasestorage.app",
+            messagingSenderId: "1081305439096",
+            appId: "1:1081305439096:web:0b7bdcc3f8f0ddc900068d",
+            measurementId: "G-2T7T34TSMF"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Global function for refresh button
+        window.loadPreorders = loadPreorders;
+
+        async function loadPreorders() {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const preordersContainer = document.getElementById('preordersContainer');
+            const emptyState = document.getElementById('emptyState');
+            const tableBody = document.getElementById('preordersTableBody');
+
+            // Show loading
+            loadingIndicator.style.display = 'block';
+            preordersContainer.style.display = 'none';
+            emptyState.style.display = 'none';
+
+            try {
+                const q = query(collection(db, 'preorders'), orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
+                
+                const preorders = [];
+                querySnapshot.forEach((doc) => {
+                    preorders.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Update stats
+                updateStats(preorders);
+
+                // Clear table
+                tableBody.innerHTML = '';
+
+                if (preorders.length === 0) {
+                    loadingIndicator.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                // Populate table
+                preorders.forEach(preorder => {
+                    const row = document.createElement('tr');
+                    
+                    const date = preorder.timestamp ? 
+                        new Date(preorder.timestamp.seconds * 1000).toLocaleDateString('ru-RU') : 
+                        'Неизвестно';
+
+                    row.innerHTML = `
+                        <td>${preorder.name || 'Неизвестно'}</td>
+                        <td>${preorder.email || 'Неизвестно'}</td>
+                        <td>${getExperienceLabel(preorder.experience)}</td>
+                        <td>${getRoleLabel(preorder.role)}</td>
+                        <td>${date}</td>
+                        <td><span class="status-badge status-${preorder.status || 'preorder'}">${getStatusLabel(preorder.status)}</span></td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+
+                loadingIndicator.style.display = 'none';
+                preordersContainer.style.display = 'block';
+
+            } catch (error) {
+                console.error('Error loading preorders:', error);
+                loadingIndicator.innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Ошибка загрузки данных</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Проверьте подключение к интернету</p>
+                `;
+            }
+        }
+
+        function updateStats(preorders) {
+            const totalPreorders = preorders.length;
+            const totalRevenue = totalPreorders * 24;
+            
+            // Calculate average experience
+            const experienceMap = {
+                'junior': 1.5,
+                'middle': 4,
+                'senior': 7,
+                'lead': 10
+            };
+            
+            const avgExp = preorders.length > 0 ? 
+                preorders.reduce((sum, p) => sum + (experienceMap[p.experience] || 0), 0) / preorders.length : 0;
+
+            // Update DOM
+            document.getElementById('totalPreorders').textContent = totalPreorders;
+            document.getElementById('totalRevenue').textContent = `$${totalRevenue}`;
+            document.getElementById('avgExperience').textContent = avgExp > 0 ? `${avgExp.toFixed(1)} лет` : '-';
+
+            // Update goal progress
+            const goalProgress = Math.min((totalPreorders / 10) * 100, 100);
+            document.getElementById('goalProgress').style.width = `${goalProgress}%`;
+            document.getElementById('goalText').textContent = `${totalPreorders} / 10`;
+        }
+
+        function getExperienceLabel(experience) {
+            const labels = {
+                'junior': 'Junior (1-2 года)',
+                'middle': 'Middle (3-5 лет)',
+                'senior': 'Senior (5+ лет)',
+                'lead': 'Тимлид/Архитектор'
+            };
+            return labels[experience] || 'Неизвестно';
+        }
+
+        function getRoleLabel(role) {
+            const labels = {
+                'frontend': 'Frontend',
+                'backend': 'Backend',
+                'fullstack': 'Fullstack',
+                'mobile': 'Mobile',
+                'devops': 'DevOps',
+                'qa': 'QA',
+                'other': 'Другое'
+            };
+            return labels[role] || 'Неизвестно';
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                'preorder': 'Предзаказ',
+                'paid': 'Оплачено',
+                'cancelled': 'Отменен'
+            };
+            return labels[status] || 'Предзаказ';
+        }
+
+        // Load data on page load
+        loadPreorders();
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadPreorders, 30000);
+    </script>
+</body>
+</html> 

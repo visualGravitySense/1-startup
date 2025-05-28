@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как объяснять код бизнесу | Курс для разработчиков</title>
+    <meta name="description" content="Научитесь переводить технические концепции в бизнес-ценности. Курс для разработчиков, которые хотят расти в карьере. Предзаказ со скидкой 50%!">
+    <meta name="keywords" content="курс для разработчиков, soft skills, презентации, коммуникация, карьера программиста">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Как объяснять код бизнесу | Курс для разработчиков">
+    <meta property="og:description" content="Научитесь переводить технические концепции в бизнес-ценности. Предзаказ со скидкой 50%!">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=630&fit=crop">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --accent: #6366f1;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --dark-gray: #374151;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: #5856eb;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero .problem {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .price-block {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .old-price {
+            font-size: 1.5rem;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .new-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .discount-badge {
+            background: var(--danger);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .timer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            display: inline-block;
+        }
+
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        /* Problem Section */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .problem-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 4px solid var(--danger);
+        }
+
+        .problem-card .icon {
+            font-size: 3rem;
+            color: var(--danger);
+            margin-bottom: 1rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .problem-card .stat {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--danger);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Solution Section */
+        .solution {
+            background: var(--light);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .module-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .module-card .module-number {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .module-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .module-card .result {
+            background: var(--success);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-card .label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Free Lesson */
+        .free-lesson {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .lesson-preview {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .lesson-preview h4 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .lesson-preview ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .lesson-preview li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .lesson-preview li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .cta-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            color: var(--primary);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: 2px solid var(--accent);
+        }
+
+        .submit-button {
+            background: var(--secondary);
+            color: white;
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-button:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .guarantee {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border: 2px solid var(--success);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-gray);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .price-block {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Success Message */
+        .success-message {
+            background: var(--success);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .error-message {
+            background: var(--danger);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">CodeTalk</div>
+            <ul class="nav-links">
+                <li><a href="#problem">Проблема</a></li>
+                <li><a href="#solution">Решение</a></li>
+                <li><a href="#free-lesson">Бесплатный урок</a></li>
+                <li><a href="#order">Заказать</a></li>
+            </ul>
+            <a href="#order" class="cta-button">Предзаказ -50%</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Как объяснять код бизнесу</h1>
+            <p class="subtitle">Научитесь переводить технические концепции в бизнес-ценности за 5 модулей</p>
+            
+            <div class="problem">
+                <strong>Знакомая ситуация?</strong><br>
+                "Нужно отрефакторить legacy код" → "Зачем переписывать то, что работает?"
+            </div>
+
+            <div class="price-block">
+                <span class="old-price">$49</span>
+                <span class="new-price">$24</span>
+                <span class="discount-badge">-50% ПРЕДЗАКАЗ</span>
+            </div>
+
+            <div class="timer">
+                <div>⏰ Акция до конца недели</div>
+                <div class="timer-display" id="countdown">5 дней 12:34:56</div>
+            </div>
+
+            <a href="#order" class="cta-button" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                Получить курс за $24
+            </a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="section" id="problem">
+        <h2>Почему разработчики не получают ресурсы на свои идеи?</h2>
+        
+        <div class="problems-grid">
+            <div class="problem-card">
+                <div class="icon">🗣️</div>
+                <h3>Говорят на техническом языке</h3>
+                <div class="stat">100%</div>
+                <p>разработчиков не умеют объяснить техническое нетехникам</p>
+            </div>
+            
+            <div class="problem-card">
+                <div class="icon">📊</div>
+                <h3>Нет структуры в презентациях</h3>
+                <div class="stat">80%</div>
+                <p>презентаций хаотичны и не убеждают</p>
+            </div>
+            
+            <div class="problem-card">
+                <div class="icon">❌</div>
+                <h3>Теряются при вопросах</h3>
+                <div class="stat">60%</div>
+                <p>не знают, как отвечать на критику и возражения</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--light); border-radius: 12px;">
+            <h3 style="color: var(--danger); margin-bottom: 1rem;">Результат:</h3>
+            <p style="font-size: 1.2rem;">Хорошие идеи не получают поддержки, карьера стоит на месте, а фрустрация растет</p>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="section solution" id="solution">
+        <h2>Решение: Курс "Как объяснять код бизнесу"</h2>
+        
+        <div class="modules-grid">
+            <div class="module-card">
+                <div class="module-number">1</div>
+                <h3>Переводчик кода</h3>
+                <p>Научитесь переводить технические концепции в бизнес-ценности. Фреймворк "Проблема → Решение → Выгода" + 20 готовых переводов.</p>
+                <div class="result">✓ Любое техническое решение через бизнес-ценность</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-number">2</div>
+                <h3>Архитектура убеждения</h3>
+                <p>Готовый шаблон технической презентации. Структура STAR + чек-лист идеальной презентации.</p>
+                <div class="result">✓ Четкая структура для любой презентации</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-number">3</div>
+                <h3>Адаптивная подача</h3>
+                <p>Техники адаптации под уровень аудитории. Матрица аудиторий: кому что говорить.</p>
+                <div class="result">✓ Подстройка сложности под аудиторию</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-number">4</div>
+                <h3>Мастер вопросов</h3>
+                <p>Система работы с вопросами и возражениями. Техника "Пауза → Уточнение → Ответ".</p>
+                <div class="result">✓ Уверенность при любых вопросах</div>
+            </div>
+            
+            <div class="module-card">
+                <div class="module-number">5</div>
+                <h3>Продажа идей</h3>
+                <p>Техники убеждения и "продажи" технических решений. Как обосновать рефакторинг через метрики.</p>
+                <div class="result">✓ Получение ресурсов на технические задачи</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; border: 2px solid var(--success);">
+            <h3 style="color: var(--success); margin-bottom: 1rem;">🎁 Бонусы в подарок:</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li>✓ 5 готовых шаблонов презентаций</li>
+                <li>✓ Словарь техника → бизнес (100+ терминов)</li>
+                <li>✓ Банк фраз для разных ситуаций</li>
+                <li>✓ 10 разборов реальных презентаций</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <h2>Результаты исследования</h2>
+        <p style="font-size: 1.2rem; color: var(--gray); margin-bottom: 2rem;">
+            Мы провели интервью с 50+ разработчиками и вот что выяснили:
+        </p>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="number">100%</span>
+                <span class="label">готовы платить за решение</span>
+            </div>
+            <div class="stat-card">
+                <span class="number">$65</span>
+                <span class="label">средняя готовность платить</span>
+            </div>
+            <div class="stat-card">
+                <span class="number">5/5</span>
+                <span class="label">болезненность проблемы</span>
+            </div>
+            <div class="stat-card">
+                <span class="number">30%</span>
+                <span class="label">рост зарплаты после улучшения коммуникации</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Free Lesson -->
+    <section class="free-lesson" id="free-lesson">
+        <h2>🎁 Бесплатный мини-урок</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+            Получите первый урок курса прямо сейчас и научитесь переводить технические термины в бизнес-ценности
+        </p>
+        
+        <div class="lesson-preview">
+            <h4>Урок 1.1: "Два языка одной профессии"</h4>
+            <p><strong>Вы узнаете:</strong></p>
+            <ul>
+                <li>Фреймворк перевода "Техника → Бизнес → Выгода"</li>
+                <li>20 готовых переводов технических терминов</li>
+                <li>Как объяснить рефакторинг через бизнес-метрики</li>
+                <li>Практические примеры и упражнения</li>
+            </ul>
+            
+            <p style="margin-top: 1rem;"><strong>Пример:</strong></p>
+            <p style="font-style: italic;">
+                "Нужно отрефакторить legacy код" → 
+                "Оптимизация кода ускорит разработку на 30% и снизит количество багов"
+            </p>
+        </div>
+        
+        <a href="#order" class="cta-button" style="background: var(--secondary); font-size: 1.1rem;">
+            Получить бесплатный урок
+        </a>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="order">
+        <h2>Предзаказ со скидкой 50%</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+            Станьте одним из первых 10 студентов и получите курс за полцены
+        </p>
+
+        <div class="price-block" style="margin-bottom: 2rem;">
+            <span class="old-price">$49</span>
+            <span class="new-price">$24</span>
+            <span class="discount-badge">Экономия $25</span>
+        </div>
+
+        <form class="cta-form" id="preorderForm">
+            <div class="form-group">
+                <label for="name">Ваше имя *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="experience">Опыт разработки *</label>
+                <select id="experience" name="experience" required>
+                    <option value="">Выберите опыт</option>
+                    <option value="junior">1-2 года (Junior)</option>
+                    <option value="middle">3-5 лет (Middle)</option>
+                    <option value="senior">5+ лет (Senior)</option>
+                    <option value="lead">Тимлид/Архитектор</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="role">Текущая роль *</label>
+                <select id="role" name="role" required>
+                    <option value="">Выберите роль</option>
+                    <option value="frontend">Frontend разработчик</option>
+                    <option value="backend">Backend разработчик</option>
+                    <option value="fullstack">Fullstack разработчик</option>
+                    <option value="mobile">Mobile разработчик</option>
+                    <option value="devops">DevOps инженер</option>
+                    <option value="qa">QA инженер</option>
+                    <option value="other">Другое</option>
+                </select>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ Спасибо! Ваш предзаказ принят. Бесплатный урок отправлен на email.
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                ❌ Произошла ошибка. Попробуйте еще раз или напишите нам на email.
+            </div>
+
+            <button type="submit" class="submit-button" id="submitButton">
+                🚀 Оформить предзаказ за $24
+            </button>
+        </form>
+
+        <div class="guarantee">
+            <h4>💰 Гарантия возврата денег</h4>
+            <p>Если курс не поможет вам улучшить коммуникацию с бизнесом, мы вернем деньги в течение 30 дней. Без вопросов.</p>
+        </div>
+
+        <p style="margin-top: 2rem; opacity: 0.8;">
+            ⏰ Акция действует до конца недели. После этого цена будет $49.
+        </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 CodeTalk. Курс для разработчиков, которые хотят расти в карьере.</p>
+        <p style="margin-top: 1rem; opacity: 0.7;">
+            Есть вопросы? Напишите нам: <a href="mailto:hello@codetalk.dev" style="color: var(--secondary);">hello@codetalk.dev</a>
+        </p>
+    </footer>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYV9WGP9JItX-vZL6sYMkoxAnLXq0pmCg",
+            authDomain: "main-management-572b0.firebaseapp.com",
+            projectId: "main-management-572b0",
+            storageBucket: "main-management-572b0.firebasestorage.app",
+            messagingSenderId: "1081305439096",
+            appId: "1:1081305439096:web:0b7bdcc3f8f0ddc900068d",
+            measurementId: "G-2T7T34TSMF"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Form submission
+        document.getElementById('preorderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitButton = document.getElementById('submitButton');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Disable button
+            submitButton.disabled = true;
+            submitButton.textContent = 'Обработка...';
+            
+            // Hide messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            try {
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    experience: document.getElementById('experience').value,
+                    role: document.getElementById('role').value,
+                    timestamp: serverTimestamp(),
+                    price: 24,
+                    originalPrice: 49,
+                    discount: 50,
+                    source: 'landing_preorder',
+                    status: 'preorder',
+                    course: 'code-to-business'
+                };
+                
+                await addDoc(collection(db, 'preorders'), formData);
+                
+                // Show success
+                successMessage.style.display = 'block';
+                document.getElementById('preorderForm').reset();
+                
+                // Track conversion
+                console.log('Предзаказ оформлен:', formData);
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.style.display = 'block';
+                errorMessage.scrollIntoView({ behavior: 'smooth' });
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = '🚀 Оформить предзаказ за $24';
+            }
+        });
+
+        // Countdown timer
+        function updateCountdown() {
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 5); // 5 days from now
+            
+            const now = new Date();
+            const timeLeft = endDate - now;
+            
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById('countdown').textContent = 
+                    `${days} дней ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+
+    <!-- Smooth scrolling -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
