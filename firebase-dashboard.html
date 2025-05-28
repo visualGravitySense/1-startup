@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Dashboard - Управление данными стартапа</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            background: #fafafa;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336 0%, #da190b 100%);
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .progress {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .data-preview {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .config-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .config-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 Firebase Dashboard</h1>
+            <p>Управление данными стартапа "Soft Skills for Tech Professionals"</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Конфигурация Firebase -->
+            <div class="section">
+                <h2>⚙️ Конфигурация Firebase</h2>
+                <div class="config-section">
+                    <p><strong>⚠️ Важно:</strong> Замените конфигурацию на вашу Firebase</p>
+                    <input type="text" id="apiKey" class="config-input" placeholder="API Key">
+                    <input type="text" id="projectId" class="config-input" placeholder="Project ID">
+                    <input type="text" id="authDomain" class="config-input" placeholder="Auth Domain">
+                    <button class="btn" onclick="updateFirebaseConfig()">Обновить конфигурацию</button>
+                </div>
+            </div>
+
+            <!-- Загрузка данных -->
+            <div class="section">
+                <h2>📤 Загрузка данных в Firebase</h2>
+                <p>Загрузить все результаты исследований, посты блога и данные интервью в Firebase</p>
+                
+                <div style="margin: 20px 0;">
+                    <button class="btn" onclick="uploadAllData()" id="uploadBtn">
+                        🚀 Загрузить все данные
+                    </button>
+                    <button class="btn btn-success" onclick="uploadInterviews()">
+                        👥 Только интервью
+                    </button>
+                    <button class="btn btn-success" onclick="uploadProducts()">
+                        📦 Только продукты
+                    </button>
+                    <button class="btn btn-success" onclick="uploadBlogPosts()">
+                        📝 Только посты
+                    </button>
+                </div>
+
+                <div id="uploadStatus"></div>
+                <div id="uploadProgress" class="hidden">
+                    <div class="progress">
+                        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText">Подготовка...</p>
+                </div>
+            </div>
+
+            <!-- Просмотр данных -->
+            <div class="section">
+                <h2>📊 Просмотр данных</h2>
+                <div style="margin: 20px 0;">
+                    <button class="btn" onclick="loadInterviews()">👥 Интервью</button>
+                    <button class="btn" onclick="loadProducts()">📦 Продукты</button>
+                    <button class="btn" onclick="loadBlogPosts()">📝 Посты</button>
+                    <button class="btn" onclick="loadMetrics()">📈 Метрики</button>
+                    <button class="btn btn-danger" onclick="clearData()">🗑️ Очистить</button>
+                </div>
+                <div id="dataDisplay"></div>
+            </div>
+
+            <!-- Статистика -->
+            <div class="section">
+                <h2>📈 Статистика проекта</h2>
+                <div class="grid" id="statsGrid">
+                    <div class="card">
+                        <h3>🎯 Интервью</h3>
+                        <p>Проведено: <strong id="interviewCount">5</strong></p>
+                        <p>Валидация: <strong>100%</strong></p>
+                    </div>
+                    <div class="card">
+                        <h3>💰 Ценообразование</h3>
+                        <p>Средняя цена: <strong>$65</strong></p>
+                        <p>Наша цена: <strong>$49 ✅</strong></p>
+                    </div>
+                    <div class="card">
+                        <h3>📚 Контент</h3>
+                        <p>MVP модулей: <strong>1</strong></p>
+                        <p>Постов блога: <strong>2</strong></p>
+                    </div>
+                    <div class="card">
+                        <h3>🎯 Цели</h3>
+                        <p>Предзаказы: <strong>10/неделя</strong></p>
+                        <p>Продажи: <strong>50/месяц</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, doc, setDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Конфигурация Firebase (ваша реальная конфигурация)
+        let firebaseConfig = {
+            apiKey: "AIzaSyCYV9WGP9JItX-vZL6sYMkoxAnLXq0pmCg",
+            authDomain: "main-management-572b0.firebaseapp.com",
+            projectId: "main-management-572b0",
+            storageBucket: "main-management-572b0.firebasestorage.app",
+            messagingSenderId: "1081305439096",
+            appId: "1:1081305439096:web:0b7bdcc3f8f0ddc900068d",
+            measurementId: "G-2T7T34TSMF"
+        };
+
+        let app, db;
+
+        function initFirebase() {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                showStatus('Firebase инициализирован успешно', 'success');
+                return true;
+            } catch (error) {
+                showStatus('Ошибка инициализации Firebase: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        // Инициализация при загрузке
+        initFirebase();
+
+        // Глобальные функции
+        window.updateFirebaseConfig = function() {
+            const apiKey = document.getElementById('apiKey').value;
+            const projectId = document.getElementById('projectId').value;
+            const authDomain = document.getElementById('authDomain').value;
+
+            if (apiKey && projectId && authDomain) {
+                firebaseConfig = {
+                    ...firebaseConfig,
+                    apiKey,
+                    projectId,
+                    authDomain: authDomain || `${projectId}.firebaseapp.com`
+                };
+                
+                if (initFirebase()) {
+                    showStatus('Конфигурация Firebase обновлена', 'success');
+                }
+            } else {
+                showStatus('Заполните все поля конфигурации', 'error');
+            }
+        };
+
+        window.uploadAllData = async function() {
+            if (!db) {
+                showStatus('Firebase не инициализирован', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('uploadBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Загрузка...';
+            
+            showProgress(true);
+            updateProgress(0, 'Начинаю загрузку...');
+
+            try {
+                // Загрузка интервью
+                updateProgress(20, 'Загружаю данные интервью...');
+                await uploadInterviewData();
+                
+                // Загрузка концепции продукта
+                updateProgress(40, 'Загружаю концепцию продукта...');
+                await uploadProductConcept();
+                
+                // Загрузка MVP
+                updateProgress(60, 'Загружаю MVP модуль...');
+                await uploadMVPModule();
+                
+                // Загрузка постов
+                updateProgress(80, 'Загружаю посты блога...');
+                await uploadBlogPosts();
+                
+                // Загрузка метрик
+                updateProgress(100, 'Загружаю метрики...');
+                await uploadDailyMetrics();
+                
+                showStatus('✅ Все данные успешно загружены в Firebase!', 'success');
+                
+            } catch (error) {
+                showStatus('❌ Ошибка загрузки: ' + error.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '🚀 Загрузить все данные';
+                showProgress(false);
+            }
+        };
+
+        // Функции загрузки данных
+        async function uploadInterviewData() {
+            const interviewData = {
+                date: '2024-01-04',
+                type: 'simulated',
+                totalInterviews: 5,
+                profiles: [
+                    {
+                        id: 'alexey_frontend',
+                        name: 'Алексей',
+                        role: 'Frontend Developer',
+                        experience: 3,
+                        willingToPay: true,
+                        maxPrice: 50,
+                        quote: 'Мне нужно научиться говорить на языке бизнеса, а не только кода'
+                    },
+                    {
+                        id: 'maria_backend',
+                        name: 'Мария',
+                        role: 'Backend Developer',
+                        experience: 5,
+                        willingToPay: true,
+                        maxPrice: 75,
+                        quote: 'Хочу научиться продавать свои идеи руководству'
+                    }
+                    // ... остальные профили
+                ],
+                validation: {
+                    problemExists: true,
+                    willingToPay: true,
+                    priceValidated: true,
+                    targetAudienceCorrect: true
+                }
+            };
+
+            await setDoc(doc(db, 'interviews', 'day4_results'), interviewData);
+        }
+
+        async function uploadProductConcept() {
+            const productData = {
+                version: '2.0',
+                date: '2024-01-04',
+                name: 'Как объяснять код бизнесу: Презентации для разработчиков',
+                price: 49,
+                priceValidated: true,
+                structure: [
+                    { module: 1, name: 'Переводчик кода' },
+                    { module: 2, name: 'Архитектура убеждения' },
+                    { module: 3, name: 'Адаптивная подача' },
+                    { module: 4, name: 'Мастер вопросов' },
+                    { module: 5, name: 'Продажа идей' }
+                ]
+            };
+
+            await setDoc(doc(db, 'product_concepts', 'concept_v2'), productData);
+        }
+
+        async function uploadMVPModule() {
+            const mvpData = {
+                moduleNumber: 1,
+                name: 'Переводчик кода',
+                goal: 'Научить разработчиков переводить технические концепции в понятные бизнесу термины',
+                date: '2024-01-04',
+                timeToComplete: '2-3 часа',
+                practicalValue: 'Сразу можете применять в работе'
+            };
+
+            await setDoc(doc(db, 'mvp_modules', 'module1_translator'), mvpData);
+        }
+
+        async function uploadBlogPosts() {
+            const blogPosts = [
+                {
+                    id: 'day4_blog',
+                    title: 'День 4: Валидация концепции и создание MVP',
+                    date: '2024-01-04',
+                    type: 'blog',
+                    platform: 'blog',
+                    tags: ['валидация', 'mvp', 'интервью', 'продукт']
+                },
+                {
+                    id: 'day4_telegram',
+                    title: 'День 4: Валидация концепции и создание MVP',
+                    date: '2024-01-04',
+                    type: 'social',
+                    platform: 'telegram',
+                    tags: ['валидация', 'mvp', 'edtech', 'стартап']
+                }
+            ];
+
+            for (const post of blogPosts) {
+                await setDoc(doc(db, 'blog_posts', post.id), post);
+            }
+        }
+
+        async function uploadDailyMetrics() {
+            const metricsData = {
+                date: '2024-01-04',
+                day: 4,
+                completed: {
+                    interviews: 5,
+                    productConcept: 1,
+                    mvpModules: 1,
+                    blogPosts: 2,
+                    timeSpent: 4
+                },
+                validation: {
+                    problemConfirmed: true,
+                    willingToPayPercentage: 100,
+                    priceValidated: true
+                }
+            };
+
+            await setDoc(doc(db, 'daily_metrics', 'day4'), metricsData);
+        }
+
+        // Функции просмотра данных
+        window.loadInterviews = async function() {
+            if (!db) return;
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, 'interviews'));
+                const interviews = [];
+                querySnapshot.forEach((doc) => {
+                    interviews.push({ id: doc.id, ...doc.data() });
+                });
+                
+                displayData('Интервью', interviews);
+            } catch (error) {
+                showStatus('Ошибка загрузки интервью: ' + error.message, 'error');
+            }
+        };
+
+        window.loadProducts = async function() {
+            if (!db) return;
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, 'product_concepts'));
+                const products = [];
+                querySnapshot.forEach((doc) => {
+                    products.push({ id: doc.id, ...doc.data() });
+                });
+                
+                displayData('Концепции продуктов', products);
+            } catch (error) {
+                showStatus('Ошибка загрузки продуктов: ' + error.message, 'error');
+            }
+        };
+
+        window.loadBlogPosts = async function() {
+            if (!db) return;
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, 'blog_posts'));
+                const posts = [];
+                querySnapshot.forEach((doc) => {
+                    posts.push({ id: doc.id, ...doc.data() });
+                });
+                
+                displayData('Посты блога', posts);
+            } catch (error) {
+                showStatus('Ошибка загрузки постов: ' + error.message, 'error');
+            }
+        };
+
+        window.loadMetrics = async function() {
+            if (!db) return;
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, 'daily_metrics'));
+                const metrics = [];
+                querySnapshot.forEach((doc) => {
+                    metrics.push({ id: doc.id, ...doc.data() });
+                });
+                
+                displayData('Ежедневные метрики', metrics);
+            } catch (error) {
+                showStatus('Ошибка загрузки метрик: ' + error.message, 'error');
+            }
+        };
+
+        window.clearData = function() {
+            document.getElementById('dataDisplay').innerHTML = '';
+        };
+
+        // Вспомогательные функции
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function showProgress(show) {
+            const progressDiv = document.getElementById('uploadProgress');
+            progressDiv.classList.toggle('hidden', !show);
+        }
+
+        function updateProgress(percent, text) {
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressText').textContent = text;
+        }
+
+        function displayData(title, data) {
+            const displayDiv = document.getElementById('dataDisplay');
+            displayDiv.innerHTML = `
+                <h3>${title}</h3>
+                <div class="data-preview">
+                    ${JSON.stringify(data, null, 2)}
+                </div>
+            `;
+        }
+
+        // Отдельные функции загрузки
+        window.uploadInterviews = async function() {
+            if (!db) return;
+            try {
+                await uploadInterviewData();
+                showStatus('✅ Данные интервью загружены', 'success');
+            } catch (error) {
+                showStatus('❌ Ошибка загрузки интервью: ' + error.message, 'error');
+            }
+        };
+
+        window.uploadProducts = async function() {
+            if (!db) return;
+            try {
+                await uploadProductConcept();
+                await uploadMVPModule();
+                showStatus('✅ Данные продуктов загружены', 'success');
+            } catch (error) {
+                showStatus('❌ Ошибка загрузки продуктов: ' + error.message, 'error');
+            }
+        };
+
+        window.uploadBlogPosts = async function() {
+            if (!db) return;
+            try {
+                await uploadBlogPosts();
+                showStatus('✅ Посты блога загружены', 'success');
+            } catch (error) {
+                showStatus('❌ Ошибка загрузки постов: ' + error.message, 'error');
+            }
+        };
+    </script>
+</body>
+</html> 

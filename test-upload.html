@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест загрузки данных в Firebase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #3367d6;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Загрузка данных стартапа в Firebase</h1>
+        <p>Проект: <strong>main-management-572b0</strong></p>
+        
+        <div id="status"></div>
+        
+        <button class="btn" onclick="uploadAllData()">🚀 Загрузить все данные</button>
+        <button class="btn" onclick="testConnection()">🔗 Проверить соединение</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, doc, setDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Ваша конфигурация Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYV9WGP9JItX-vZL6sYMkoxAnLXq0pmCg",
+            authDomain: "main-management-572b0.firebaseapp.com",
+            projectId: "main-management-572b0",
+            storageBucket: "main-management-572b0.firebasestorage.app",
+            messagingSenderId: "1081305439096",
+            appId: "1:1081305439096:web:0b7bdcc3f8f0ddc900068d",
+            measurementId: "G-2T7T34TSMF"
+        };
+
+        // Инициализация Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        function showStatus(message, type = 'loading') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function showResults(data) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<pre style="background: #f8f9fa; padding: 15px; border-radius: 5px; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>`;
+        }
+
+        // Проверка соединения
+        window.testConnection = async function() {
+            showStatus('🔗 Проверяю соединение с Firebase...', 'loading');
+            
+            try {
+                // Попробуем записать тестовый документ
+                await setDoc(doc(db, 'test', 'connection'), {
+                    timestamp: new Date(),
+                    status: 'connected',
+                    project: 'main-management-572b0'
+                });
+                
+                showStatus('✅ Соединение с Firebase успешно!', 'success');
+            } catch (error) {
+                showStatus('❌ Ошибка соединения: ' + error.message, 'error');
+                console.error('Firebase error:', error);
+            }
+        };
+
+        // Загрузка всех данных
+        window.uploadAllData = async function() {
+            showStatus('🚀 Начинаю загрузку данных стартапа...', 'loading');
+            
+            try {
+                // 1. Загрузка результатов интервью
+                showStatus('📊 Загружаю результаты интервью...', 'loading');
+                await uploadInterviews();
+                
+                // 2. Загрузка концепции продукта
+                showStatus('📦 Загружаю концепцию продукта...', 'loading');
+                await uploadProductConcept();
+                
+                // 3. Загрузка MVP модуля
+                showStatus('🎯 Загружаю MVP модуль...', 'loading');
+                await uploadMVPModule();
+                
+                // 4. Загрузка постов блога
+                showStatus('📝 Загружаю посты блога...', 'loading');
+                await uploadBlogPosts();
+                
+                // 5. Загрузка метрик
+                showStatus('📈 Загружаю ежедневные метрики...', 'loading');
+                await uploadMetrics();
+                
+                showStatus('🎉 Все данные успешно загружены в Firebase!', 'success');
+                
+                // Показываем статистику
+                const stats = {
+                    collections: 5,
+                    documents: 7,
+                    interviews: 5,
+                    modules: 1,
+                    posts: 2,
+                    project: 'main-management-572b0'
+                };
+                showResults(stats);
+                
+            } catch (error) {
+                showStatus('❌ Ошибка загрузки: ' + error.message, 'error');
+                console.error('Upload error:', error);
+            }
+        };
+
+        // Функции загрузки данных
+        async function uploadInterviews() {
+            const interviewData = {
+                date: '2024-01-04',
+                type: 'simulated',
+                totalInterviews: 5,
+                profiles: [
+                    {
+                        id: 'alexey_frontend',
+                        name: 'Алексей',
+                        role: 'Frontend Developer',
+                        experience: 3,
+                        willingToPay: true,
+                        maxPrice: 50,
+                        quote: 'Мне нужно научиться говорить на языке бизнеса, а не только кода'
+                    },
+                    {
+                        id: 'maria_backend',
+                        name: 'Мария',
+                        role: 'Backend Developer',
+                        experience: 5,
+                        willingToPay: true,
+                        maxPrice: 75,
+                        quote: 'Хочу научиться продавать свои идеи руководству'
+                    },
+                    {
+                        id: 'dmitry_fullstack',
+                        name: 'Дмитрий',
+                        role: 'Full Stack Developer',
+                        experience: 2,
+                        willingToPay: true,
+                        maxPrice: 40,
+                        quote: 'Нужны готовые фразы для объяснения технических вещей простым языком'
+                    },
+                    {
+                        id: 'anna_devops',
+                        name: 'Анна',
+                        role: 'DevOps Engineer',
+                        experience: 4,
+                        willingToPay: true,
+                        maxPrice: 60,
+                        quote: 'Хочу научиться делать презентации, которые мотивируют, а не пугают'
+                    },
+                    {
+                        id: 'igor_senior',
+                        name: 'Игорь',
+                        role: 'Senior Java Developer',
+                        experience: 7,
+                        willingToPay: true,
+                        maxPrice: 100,
+                        quote: 'Нужно научиться объяснять сложное простыми словами'
+                    }
+                ],
+                validation: {
+                    problemExists: true,
+                    willingToPay: true,
+                    priceValidated: true,
+                    averagePrice: 65,
+                    targetAudienceCorrect: true
+                },
+                uploadedAt: new Date()
+            };
+
+            await setDoc(doc(db, 'interviews', 'day4_results'), interviewData);
+        }
+
+        async function uploadProductConcept() {
+            const productData = {
+                version: '2.0',
+                date: '2024-01-04',
+                name: 'Как объяснять код бизнесу: Презентации для разработчиков',
+                price: 49,
+                priceValidated: true,
+                structure: [
+                    { module: 1, name: 'Переводчик кода' },
+                    { module: 2, name: 'Архитектура убеждения' },
+                    { module: 3, name: 'Адаптивная подача' },
+                    { module: 4, name: 'Мастер вопросов' },
+                    { module: 5, name: 'Продажа идей' }
+                ],
+                targetAudience: [
+                    'Frontend/Backend разработчики с опытом 2-7 лет',
+                    'Тимлиды и архитекторы',
+                    'DevOps инженеры',
+                    'Фрилансеры работающие с клиентами'
+                ],
+                uploadedAt: new Date()
+            };
+
+            await setDoc(doc(db, 'product_concepts', 'concept_v2'), productData);
+        }
+
+        async function uploadMVPModule() {
+            const mvpData = {
+                moduleNumber: 1,
+                name: 'Переводчик кода',
+                goal: 'Научить разработчиков переводить технические концепции в понятные бизнесу термины',
+                date: '2024-01-04',
+                lessons: [
+                    { number: '1.1', title: 'Два языка одной профессии' },
+                    { number: '1.2', title: 'Словарь переводчика' },
+                    { number: '1.3', title: 'Фреймворк ПРВ' },
+                    { number: '1.4', title: 'Готовые фразы-переводчики' },
+                    { number: '1.5', title: 'Практический кейс' }
+                ],
+                tools: [
+                    'Таблица переводов 20 технических терминов',
+                    'Фреймворк ПРВ для любых объяснений',
+                    'Банк готовых фраз для презентаций',
+                    'Реальный кейс с примером решения'
+                ],
+                timeToComplete: '2-3 часа',
+                uploadedAt: new Date()
+            };
+
+            await setDoc(doc(db, 'mvp_modules', 'module1_translator'), mvpData);
+        }
+
+        async function uploadBlogPosts() {
+            const blogPosts = [
+                {
+                    id: 'day4_blog',
+                    title: 'День 4: Валидация концепции и создание MVP',
+                    date: '2024-01-04',
+                    type: 'blog',
+                    platform: 'blog',
+                    tags: ['валидация', 'mvp', 'интервью', 'продукт'],
+                    summary: 'Провел симулированные интервью с программистами и создал валидированную концепцию продукта + MVP первого модуля',
+                    uploadedAt: new Date()
+                },
+                {
+                    id: 'day4_telegram',
+                    title: 'День 4: Валидация концепции и создание MVP',
+                    date: '2024-01-04',
+                    type: 'social',
+                    platform: 'telegram',
+                    tags: ['валидация', 'mvp', 'edtech', 'стартап'],
+                    summary: 'Сегодня провел симулированные интервью с программистами и создал валидированную концепцию продукта + MVP первого модуля!',
+                    uploadedAt: new Date()
+                }
+            ];
+
+            for (const post of blogPosts) {
+                await setDoc(doc(db, 'blog_posts', post.id), post);
+            }
+        }
+
+        async function uploadMetrics() {
+            const metricsData = {
+                date: '2024-01-04',
+                day: 4,
+                completed: {
+                    interviews: 5,
+                    productConcept: 1,
+                    mvpModules: 1,
+                    blogPosts: 2,
+                    timeSpent: 4
+                },
+                validation: {
+                    problemConfirmed: true,
+                    willingToPayPercentage: 100,
+                    priceValidated: true,
+                    targetAudienceCorrect: true
+                },
+                goals: {
+                    weekly: { preorders: 10, emailSubscribers: 50, landingViews: 200 },
+                    monthly: { sales: 50, rating: 4.5, repeatRate: 20 }
+                },
+                insights: [
+                    'Валидация через интервью - это золото!',
+                    'Фокус на переводе техника → бизнес',
+                    'Специализация для разработчиков работает',
+                    'Готовые инструменты критически важны'
+                ],
+                uploadedAt: new Date()
+            };
+
+            await setDoc(doc(db, 'daily_metrics', 'day4'), metricsData);
+        }
+
+        // Автоматическая проверка соединения при загрузке
+        window.addEventListener('load', () => {
+            showStatus('🔥 Firebase готов к работе. Нажмите кнопку для загрузки данных.', 'success');
+        });
+    </script>
+</body>
+</html> 

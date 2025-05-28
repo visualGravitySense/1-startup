@@ -324,4 +324,48 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // 📱 ЭКСПОРТ ДЛЯ ОТЛАДКИ
-export default App; 
+export default App;
+
+// Простой Express сервер для Firebase Dashboard
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('.'));
+
+// Главная страница - Firebase Dashboard
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'firebase-dashboard.html'));
+});
+
+// API для получения информации о проекте
+app.get('/api/project-info', (req, res) => {
+    res.json({
+        name: 'Startup Firebase Manager',
+        description: 'Система управления данными стартапа "Soft Skills for Tech Professionals"',
+        version: '1.0.0',
+        collections: [
+            'interviews',
+            'product_concepts', 
+            'mvp_modules',
+            'blog_posts',
+            'daily_metrics'
+        ],
+        status: 'ready'
+    });
+});
+
+// Запуск сервера
+app.listen(PORT, () => {
+    console.log(`🚀 Firebase Dashboard запущен на http://localhost:${PORT}`);
+    console.log(`📊 Откройте браузер и перейдите по ссылке выше`);
+    console.log(`🔥 Настройте Firebase конфигурацию в интерфейсе`);
+});
+
+module.exports = app; 
