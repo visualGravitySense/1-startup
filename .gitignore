@@ -259,4 +259,11 @@ ENV/
 
 # Firebase cache
 .firebase/
-firebase-debug.log 
+firebase-debug.log
+
+# Railway
+.railway/
+
+# Local development
+local-config.js
+test-bot.js 
