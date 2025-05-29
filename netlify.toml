@@ -7,11 +7,41 @@
 
 [[redirects]]
   from = "/"
-  to = "/landing.html"
+  to = "/ux-ui-landing.html"
+  status = 200
+
+[[redirects]]
+  from = "/ux-ui"
+  to = "/ux-ui-landing.html"
+  status = 200
+
+[[redirects]]
+  from = "/figma"
+  to = "/ux-ui-landing.html"
+  status = 200
+
+[[redirects]]
+  from = "/design"
+  to = "/ux-ui-landing.html"
+  status = 200
+
+[[redirects]]
+  from = "/ux-ui-free-lesson"
+  to = "/ux-ui-free-lesson.html"
+  status = 200
+
+[[redirects]]
+  from = "/figma-lesson"
+  to = "/ux-ui-free-lesson.html"
   status = 200
 
 [[redirects]]
   from = "/landing"
+  to = "/landing.html"
+  status = 200
+
+[[redirects]]
+  from = "/code-course"
   to = "/landing.html"
   status = 200
 
