@@ -71,23 +71,6 @@
             color: var(--accent);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
         .cta-button {
             background: var(--accent);
             color: white;
@@ -462,10 +445,6 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
             .hero {
                 padding: 6rem 1rem 3rem;
             }
@@ -505,12 +484,6 @@
     <header class="header">
         <nav class="nav">
             <div class="logo">CodeTalk</div>
-            <ul class="nav-links">
-                <li><a href="#problem">Проблема</a></li>
-                <li><a href="#solution">Решение</a></li>
-                <li><a href="#free-lesson">Бесплатный урок</a></li>
-                <li><a href="#order">Заказать</a></li>
-            </ul>
             <a href="#order" class="cta-button">Предзаказ -50%</a>
         </nav>
     </header>
@@ -519,7 +492,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Как объяснять код бизнесу</h1>
-            <p class="subtitle">Научитесь переводить технические концепции в бизнес-ценности за 5 модулей</p>
+            <p class="subtitle">Научитесь переводить технические концепции в бизнес-ценности</p>
             
             <div class="problem">
                 <strong>Знакомая ситуация?</strong><br>
@@ -597,22 +570,8 @@
             
             <div class="module-card">
                 <div class="module-number">3</div>
-                <h3>Адаптивная подача</h3>
-                <p>Техники адаптации под уровень аудитории. Матрица аудиторий: кому что говорить.</p>
-                <div class="result">✓ Подстройка сложности под аудиторию</div>
-            </div>
-            
-            <div class="module-card">
-                <div class="module-number">4</div>
-                <h3>Мастер вопросов</h3>
-                <p>Система работы с вопросами и возражениями. Техника "Пауза → Уточнение → Ответ".</p>
-                <div class="result">✓ Уверенность при любых вопросах</div>
-            </div>
-            
-            <div class="module-card">
-                <div class="module-number">5</div>
-                <h3>Продажа идей</h3>
-                <p>Техники убеждения и "продажи" технических решений. Как обосновать рефакторинг через метрики.</p>
+                <h3>Мастер возражений</h3>
+                <p>Система работы с вопросами и возражениями. Техники убеждения и "продажи" технических решений через метрики.</p>
                 <div class="result">✓ Получение ресурсов на технические задачи</div>
             </div>
         </div>
@@ -620,33 +579,21 @@
         <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; border: 2px solid var(--success);">
             <h3 style="color: var(--success); margin-bottom: 1rem;">🎁 Бонусы в подарок:</h3>
             <ul style="list-style: none; padding: 0;">
-                <li>✓ 5 готовых шаблонов презентаций</li>
-                <li>✓ Словарь техника → бизнес (100+ терминов)</li>
-                <li>✓ Банк фраз для разных ситуаций</li>
-                <li>✓ 10 разборов реальных презентаций</li>
+                <li>✓ 3 готовых шаблона презентаций</li>
+                <li>✓ Словарь техника → бизнес (50+ терминов)</li>
+                <li>✓ 5 разборов реальных кейсов</li>
             </ul>
         </div>
     </section>
 
     <!-- Social Proof -->
     <section class="social-proof">
-        <h2>Результаты исследования</h2>
-        <p style="font-size: 1.2rem; color: var(--gray); margin-bottom: 2rem;">
-            Мы провели интервью с 50+ разработчиками и вот что выяснили:
-        </p>
+        <h2>Почему это работает</h2>
         
         <div class="stats-grid">
             <div class="stat-card">
-                <span class="number">100%</span>
-                <span class="label">готовы платить за решение</span>
-            </div>
-            <div class="stat-card">
-                <span class="number">$65</span>
-                <span class="label">средняя готовность платить</span>
-            </div>
-            <div class="stat-card">
-                <span class="number">5/5</span>
-                <span class="label">болезненность проблемы</span>
+                <span class="number">70%</span>
+                <span class="label">разработчиков теряют идеи из-за плохой подачи</span>
             </div>
             <div class="stat-card">
                 <span class="number">30%</span>
@@ -706,31 +653,6 @@
             <div class="form-group">
                 <label for="email">Email *</label>
                 <input type="email" id="email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="experience">Опыт разработки *</label>
-                <select id="experience" name="experience" required>
-                    <option value="">Выберите опыт</option>
-                    <option value="junior">1-2 года (Junior)</option>
-                    <option value="middle">3-5 лет (Middle)</option>
-                    <option value="senior">5+ лет (Senior)</option>
-                    <option value="lead">Тимлид/Архитектор</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="role">Текущая роль *</label>
-                <select id="role" name="role" required>
-                    <option value="">Выберите роль</option>
-                    <option value="frontend">Frontend разработчик</option>
-                    <option value="backend">Backend разработчик</option>
-                    <option value="fullstack">Fullstack разработчик</option>
-                    <option value="mobile">Mobile разработчик</option>
-                    <option value="devops">DevOps инженер</option>
-                    <option value="qa">QA инженер</option>
-                    <option value="other">Другое</option>
-                </select>
             </div>
 
             <div class="success-message" id="successMessage">
@@ -804,8 +726,6 @@
                 const formData = {
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
-                    experience: document.getElementById('experience').value,
-                    role: document.getElementById('role').value,
                     timestamp: serverTimestamp(),
                     price: 24,
                     originalPrice: 49,
