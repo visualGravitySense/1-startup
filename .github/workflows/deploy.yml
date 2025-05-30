@@ -1,38 +1,74 @@
-name: Deploy to GitHub Pages
+name: 🚀 Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    branches: [ main ]
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
       
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-      
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4 
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: 📦 Install dependencies (if needed)
+      run: |
+        if [ -f package.json ]; then
+          npm ci
+        else
+          echo "No package.json found, skipping npm install"
+        fi
+        
+    - name: 🏗️ Build (if needed)
+      run: |
+        if [ -f package.json ] && [ -n "$(npm run | grep build)" ]; then
+          npm run build
+        else
+          echo "No build script found, using static files"
+        fi
+        
+    - name: 🎨 Prepare deployment files
+      run: |
+        # Создаем папку для деплоя
+        mkdir -p deploy
+        
+        # Копируем HTML файлы
+        cp *.html deploy/ 2>/dev/null || echo "No HTML files found in root"
+        
+        # Копируем остальные статические файлы
+        if [ -d "css" ]; then cp -r css deploy/; fi
+        if [ -d "js" ]; then cp -r js deploy/; fi
+        if [ -d "images" ]; then cp -r images deploy/; fi
+        if [ -d "assets" ]; then cp -r assets deploy/; fi
+        if [ -d "fonts" ]; then cp -r fonts deploy/; fi
+        
+        # Если есть build папка, используем её
+        if [ -d "build" ]; then
+          cp -r build/* deploy/
+        elif [ -d "dist" ]; then
+          cp -r dist/* deploy/
+        fi
+        
+        # Убеждаемся что index.html есть в папке deploy
+        if [ ! -f deploy/index.html ] && [ -f index.html ]; then
+          cp index.html deploy/
+        fi
+        
+        echo "Deployment files prepared:"
+        ls -la deploy/
+        
+    - name: 🚀 Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./deploy
+        cname: false # Измените на ваш домен если нужно 
