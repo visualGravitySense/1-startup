@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Main pages
+Allow: /index.html
+Allow: /ux-ui-free-lesson.html
+
+# Sitemaps
+Sitemap: https://digoclasses.com/sitemap.xml
+
+# Block admin areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /*.js$
+Disallow: /*.css$ 

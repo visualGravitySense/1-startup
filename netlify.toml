@@ -12,17 +12,17 @@
 
 [[redirects]]
   from = "/ux-ui"
-  to = "/ux-ui-landing.html"
+  to = "/index.html"
   status = 200
 
 [[redirects]]
   from = "/figma"
-  to = "/ux-ui-landing.html"
+  to = "/index.html"
   status = 200
 
 [[redirects]]
   from = "/design"
-  to = "/ux-ui-landing.html"
+  to = "/index.html"
   status = 200
 
 [[redirects]]
