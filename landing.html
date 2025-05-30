@@ -14,20 +14,38 @@
     <meta property="og:image" content="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=630&fit=crop">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap');
+        
         :root {
-            --primary: #1a1a1a;
-            --accent: #6366f1;
-            --secondary: #f59e0b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --light: #f8fafc;
-            --white: #ffffff;
-            --gray: #6b7280;
-            --dark-gray: #374151;
+            /* Пастельная палитра */
+            --pastel-purple: #E6E6FA;
+            --pastel-pink: #FFE4E1;
+            --pastel-blue: #E0F6FF;
+            --pastel-mint: #F0FFF0;
+            --pastel-peach: #FFEBCD;
+            --pastel-lavender: #F5F0FF;
+            
+            /* Акцентные цвета */
+            --accent-coral: #FF6B6B;
+            --accent-purple: #7C3AED;
+            --accent-mint: #10B981;
+            --accent-gold: #F59E0B;
+            
+            /* Нейтральные */
+            --text-primary: #2D1B69;
+            --text-secondary: #64748B;
+            --white: #FFFFFF;
+            --black: #1A1A1A;
+            
+            /* Градиенты */
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-soft: linear-gradient(135deg, var(--pastel-lavender) 0%, var(--pastel-blue) 50%, var(--pastel-mint) 100%);
+            --gradient-warm: linear-gradient(135deg, var(--pastel-peach) 0%, var(--pastel-pink) 100%);
+            --gradient-cool: linear-gradient(135deg, var(--pastel-purple) 0%, var(--pastel-blue) 100%);
         }
 
         * {
@@ -37,10 +55,53 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             line-height: 1.6;
-            color: var(--primary);
+            color: var(--text-primary);
             overflow-x: hidden;
+            background: var(--gradient-soft);
+        }
+
+        /* Декоративные blob формы */
+        .blob {
+            position: absolute;
+            border-radius: 50% 40% 60% 30%;
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 300px;
+            background: var(--accent-coral);
+            top: 10%;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 400px;
+            background: var(--accent-purple);
+            bottom: 20%;
+            left: -50px;
+            animation-delay: 7s;
+        }
+
+        .blob-3 {
+            width: 200px;
+            height: 200px;
+            background: var(--accent-mint);
+            top: 60%;
+            right: 10%;
+            animation-delay: 14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            33% { transform: translateY(-30px) rotate(120deg) scale(1.1); }
+            66% { transform: translateY(20px) rotate(240deg) scale(0.9); }
         }
 
         /* Header */
@@ -48,11 +109,11 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
             z-index: 1000;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .nav {
@@ -65,281 +126,376 @@
         }
 
         .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-family: 'Fraunces', serif;
+            font-size: 2rem;
             font-weight: 700;
-            color: var(--accent);
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-coral));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transform: rotate(-2deg);
         }
 
         .cta-button {
-            background: var(--accent);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            background: var(--gradient-warm);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: rotate(1deg);
         }
 
         .cta-button:hover {
-            background: #5856eb;
-            transform: translateY(-2px);
+            transform: rotate(0deg) translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--accent-coral);
         }
 
         /* Hero Section */
         .hero {
-            padding: 8rem 2rem 4rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
+            min-height: 100vh;
+            padding: 10rem 2rem 6rem;
+            background: var(--gradient-soft);
+            display: flex;
+            align-items: center;
             position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            text-align: center;
             position: relative;
             z-index: 2;
         }
 
         .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
+            font-family: 'Fraunces', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple), var(--accent-coral));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transform: rotate(-1deg);
         }
 
         .hero .subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            transform: rotate(0.5deg);
         }
 
         .hero .problem {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            border-left: 4px solid var(--secondary);
+            background: rgba(255, 255, 255, 0.7);
+            padding: 2rem;
+            border-radius: 30px;
+            margin: 3rem auto;
+            max-width: 500px;
+            border: 2px solid var(--pastel-purple);
+            transform: rotate(-0.5deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
         .price-block {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1rem;
-            margin: 2rem 0;
+            gap: 2rem;
+            margin: 3rem 0;
             flex-wrap: wrap;
         }
 
         .old-price {
-            font-size: 1.5rem;
+            font-size: 2rem;
             text-decoration: line-through;
-            opacity: 0.7;
+            opacity: 0.6;
+            color: var(--text-secondary);
+            transform: rotate(2deg);
         }
 
         .new-price {
-            font-size: 3rem;
+            font-family: 'Fraunces', serif;
+            font-size: 4rem;
             font-weight: 700;
-            color: var(--secondary);
+            background: linear-gradient(135deg, var(--accent-coral), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transform: rotate(-2deg);
         }
 
         .discount-badge {
-            background: var(--danger);
+            background: var(--accent-coral);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
             font-weight: 600;
-            animation: pulse 2s infinite;
+            transform: rotate(5deg);
+            animation: gentle-pulse 3s ease-in-out infinite;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes gentle-pulse {
+            0%, 100% { transform: rotate(5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.05); }
         }
 
         .timer {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem 2rem;
+            border-radius: 25px;
+            margin: 2rem auto;
             display: inline-block;
+            border: 2px solid var(--pastel-mint);
+            transform: rotate(-1deg);
         }
 
         .timer-display {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--secondary);
+            color: var(--accent-purple);
+            font-family: 'Fraunces', serif;
         }
 
-        /* Sections */
+        /* Section Styles */
         .section {
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
 
         .section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
             text-align: center;
-            margin-bottom: 3rem;
-            color: var(--primary);
+            margin-bottom: 4rem;
+            color: var(--text-primary);
+            transform: rotate(-1deg);
         }
 
-        /* Problem Section */
+        /* Problem Cards */
         .problems-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
         }
 
         .problem-card {
-            background: var(--light);
-            padding: 2rem;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3rem 2rem;
+            border-radius: 30px;
             text-align: center;
-            border-left: 4px solid var(--danger);
+            border: 2px solid var(--pastel-pink);
+            transform: rotate(calc(var(--rotation) * 1deg));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card:nth-child(1) { --rotation: 1; }
+        .problem-card:nth-child(2) { --rotation: -1; }
+        .problem-card:nth-child(3) { --rotation: 2; }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-cool);
+            opacity: 0.1;
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        .problem-card:hover {
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
         }
 
         .problem-card .icon {
-            font-size: 3rem;
-            color: var(--danger);
-            margin-bottom: 1rem;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
         }
 
         .problem-card h3 {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--primary);
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
         .problem-card .stat {
-            font-size: 2rem;
+            font-family: 'Fraunces', serif;
+            font-size: 3rem;
             font-weight: 700;
-            color: var(--danger);
-            margin-bottom: 0.5rem;
+            color: var(--accent-coral);
+            margin-bottom: 1rem;
+            transform: rotate(-2deg);
         }
 
         /* Solution Section */
         .solution {
-            background: var(--light);
+            background: var(--gradient-warm);
+            border-radius: 60px;
+            margin: 4rem 0;
+            position: relative;
         }
 
         .modules-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            gap: 3rem;
+            margin: 4rem 0;
         }
 
         .module-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid var(--pastel-lavender);
+            transform: rotate(calc(var(--module-rotation) * 1deg));
         }
+
+        .module-card:nth-child(1) { --module-rotation: -1; }
+        .module-card:nth-child(2) { --module-rotation: 1; }
+        .module-card:nth-child(3) { --module-rotation: -2; }
 
         .module-card:hover {
-            transform: translateY(-5px);
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
         }
 
-        .module-card .module-number {
-            background: var(--accent);
-            color: white;
-            width: 40px;
-            height: 40px;
+        .module-number {
+            background: var(--gradient-cool);
+            color: var(--text-primary);
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-family: 'Fraunces', serif;
+            transform: rotate(10deg);
         }
 
         .module-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
-        .module-card .result {
-            background: var(--success);
-            color: white;
-            padding: 0.75rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            font-weight: 500;
+        .module-card p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
         }
 
-        /* Social Proof */
+        .result {
+            background: var(--gradient-cool);
+            color: var(--text-primary);
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            text-align: center;
+            transform: rotate(1deg);
+        }
+
+        /* Другие секции */
         .social-proof {
             text-align: center;
-            padding: 4rem 2rem;
-            background: white;
+            padding: 6rem 2rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 60px;
+            margin: 4rem 0;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
         }
 
         .stat-card {
             text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            border: 2px solid var(--pastel-mint);
+            transform: rotate(calc(var(--stat-rotation) * 1deg));
         }
 
+        .stat-card:nth-child(1) { --stat-rotation: 2; }
+        .stat-card:nth-child(2) { --stat-rotation: -2; }
+
         .stat-card .number {
-            font-size: 3rem;
+            font-family: 'Fraunces', serif;
+            font-size: 4rem;
             font-weight: 700;
-            color: var(--accent);
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
+            transform: rotate(-1deg);
         }
 
         .stat-card .label {
-            color: var(--gray);
+            color: var(--text-secondary);
             font-weight: 500;
+            margin-top: 1rem;
         }
 
         /* Free Lesson */
         .free-lesson {
-            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            color: white;
+            background: var(--gradient-cool);
+            color: var(--text-primary);
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
+            border-radius: 60px;
+            margin: 4rem 0;
+            position: relative;
         }
 
         .lesson-preview {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 40px;
+            margin: 3rem auto;
             text-align: left;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 700px;
+            border: 2px solid var(--pastel-peach);
+            transform: rotate(-1deg);
         }
 
         .lesson-preview h4 {
-            margin-bottom: 1rem;
-            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            color: var(--accent-purple);
+            font-size: 1.3rem;
         }
 
         .lesson-preview ul {
@@ -348,33 +504,55 @@
         }
 
         .lesson-preview li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
+            padding: 0.8rem 0;
+            padding-left: 2rem;
             position: relative;
+            color: var(--text-secondary);
         }
 
         .lesson-preview li::before {
-            content: '✓';
+            content: '✨';
             position: absolute;
             left: 0;
-            color: var(--secondary);
-            font-weight: 700;
+            font-size: 1.2rem;
         }
 
         /* CTA Section */
         .cta-section {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple));
             color: white;
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
+            border-radius: 60px;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .cta-form {
             max-width: 500px;
-            margin: 2rem auto;
+            margin: 3rem auto;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
         }
 
         .form-group {
@@ -384,102 +562,122 @@
         }
 
         .form-group label {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             font-weight: 500;
+            color: var(--pastel-lavender);
         }
 
-        .form-group input,
-        .form-group select {
-            padding: 1rem;
+        .form-group input {
+            padding: 1.5rem;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
-            color: var(--primary);
+            border-radius: 25px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: 2px solid var(--accent);
+        .form-group input:focus {
+            outline: none;
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
         }
 
         .submit-button {
-            background: var(--secondary);
-            color: white;
-            padding: 1.25rem 2rem;
+            background: var(--gradient-warm);
+            color: var(--text-primary);
+            padding: 1.5rem 3rem;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             margin-top: 1rem;
+            transform: rotate(-1deg);
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .submit-button:hover {
-            background: #d97706;
-            transform: translateY(-2px);
+            transform: rotate(0deg) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255,255,255,0.3);
         }
 
         .submit-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
+            transform: rotate(-1deg);
         }
 
         .guarantee {
             background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 2rem 0;
-            border: 2px solid var(--success);
+            padding: 2rem;
+            border-radius: 30px;
+            margin: 3rem auto;
+            border: 2px solid var(--pastel-mint);
+            max-width: 600px;
+            transform: rotate(1deg);
         }
 
         /* Footer */
         .footer {
-            background: var(--dark-gray);
-            color: white;
+            background: var(--text-primary);
+            color: var(--pastel-lavender);
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
+            border-radius: 60px 60px 0 0;
+            margin-top: 4rem;
+        }
+
+        /* Messages */
+        .success-message, .error-message {
+            padding: 1.5rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            font-weight: 500;
+            display: none;
+            transform: rotate(-0.5deg);
+        }
+
+        .success-message {
+            background: var(--pastel-mint);
+            color: var(--text-primary);
+            border: 2px solid var(--accent-mint);
+        }
+
+        .error-message {
+            background: var(--pastel-pink);
+            color: var(--text-primary);
+            border: 2px solid var(--accent-coral);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                padding: 6rem 1rem 3rem;
+                padding: 8rem 1rem 4rem;
             }
             
             .section {
-                padding: 3rem 1rem;
+                padding: 4rem 1rem;
             }
             
             .price-block {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 1rem;
             }
-        }
 
-        /* Success Message */
-        .success-message {
-            background: var(--success);
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            display: none;
-        }
-
-        .error-message {
-            background: var(--danger);
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            display: none;
+            .blob {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Декоративные blob формы -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
     <!-- Header -->
     <header class="header">
         <nav class="nav">
@@ -491,67 +689,67 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Как объяснять код бизнесу</h1>
-            <p class="subtitle">Научитесь переводить технические концепции в бизнес-ценности</p>
+            <h1>Код говорит с бизнесом</h1>
+            <p class="subtitle">Превратите технические концепции в язык, который понимают инвесторы и менеджеры</p>
             
             <div class="problem">
-                <strong>Знакомая ситуация?</strong><br>
+                <strong>💭 Знакомо?</strong><br>
                 "Нужно отрефакторить legacy код" → "Зачем переписывать то, что работает?"
             </div>
 
             <div class="price-block">
                 <span class="old-price">$49</span>
                 <span class="new-price">$24</span>
-                <span class="discount-badge">-50% ПРЕДЗАКАЗ</span>
+                <span class="discount-badge">−50% Early Bird</span>
             </div>
 
             <div class="timer">
-                <div>⏰ Акция до конца недели</div>
+                <div>⏰ Специальная цена ещё</div>
                 <div class="timer-display" id="countdown">5 дней 12:34:56</div>
             </div>
 
-            <a href="#order" class="cta-button" style="font-size: 1.2rem; padding: 1rem 2rem;">
-                Получить курс за $24
+            <a href="#order" class="cta-button" style="font-size: 1.3rem; padding: 1.2rem 2.5rem; margin-top: 2rem; display: inline-block;">
+                ✨ Получить курс за $24
             </a>
         </div>
     </section>
 
     <!-- Problem Section -->
     <section class="section" id="problem">
-        <h2>Почему разработчики не получают ресурсы на свои идеи?</h2>
+        <h2>Почему техническая экспертиза не продается?</h2>
         
         <div class="problems-grid">
             <div class="problem-card">
                 <div class="icon">🗣️</div>
-                <h3>Говорят на техническом языке</h3>
-                <div class="stat">100%</div>
-                <p>разработчиков не умеют объяснить техническое нетехникам</p>
+                <h3>Говорите на техническом</h3>
+                <div class="stat">87%</div>
+                <p>разработчиков теряют аудиторию в первые 2 минуты презентации</p>
             </div>
             
             <div class="problem-card">
                 <div class="icon">📊</div>
-                <h3>Нет структуры в презентациях</h3>
-                <div class="stat">80%</div>
-                <p>презентаций хаотичны и не убеждают</p>
+                <h3>Хаос вместо структуры</h3>
+                <div class="stat">73%</div>
+                <p>технических идей отклоняются из-за плохой подачи</p>
             </div>
             
             <div class="problem-card">
                 <div class="icon">❌</div>
-                <h3>Теряются при вопросах</h3>
-                <div class="stat">60%</div>
-                <p>не знают, как отвечать на критику и возражения</p>
+                <h3>Паника при вопросах</h3>
+                <div class="stat">64%</div>
+                <p>не могут защитить свои решения перед стейкхолдерами</p>
             </div>
         </div>
 
-        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--light); border-radius: 12px;">
-            <h3 style="color: var(--danger); margin-bottom: 1rem;">Результат:</h3>
-            <p style="font-size: 1.2rem;">Хорошие идеи не получают поддержки, карьера стоит на месте, а фрустрация растет</p>
+        <div style="text-align: center; margin-top: 4rem; padding: 3rem; background: rgba(255, 255, 255, 0.8); border-radius: 40px; border: 2px solid var(--pastel-pink); transform: rotate(-0.5deg);">
+            <h3 style="color: var(--accent-coral); margin-bottom: 1.5rem; font-size: 1.8rem;">💸 Цена молчания</h3>
+            <p style="font-size: 1.3rem; color: var(--text-primary);">Блестящие идеи умирают в переговорных. Карьера буксует. Фрустрация растет.</p>
         </div>
     </section>
 
     <!-- Solution Section -->
     <section class="section solution" id="solution">
-        <h2>Решение: Курс "Как объяснять код бизнесу"</h2>
+        <h2>Говорите на языке денег</h2>
         
         <div class="modules-grid">
             <div class="module-card">
@@ -588,54 +786,48 @@
 
     <!-- Social Proof -->
     <section class="social-proof">
-        <h2>Почему это работает</h2>
+        <h2>Цифры не врут</h2>
         
         <div class="stats-grid">
             <div class="stat-card">
-                <span class="number">70%</span>
-                <span class="label">разработчиков теряют идеи из-за плохой подачи</span>
+                <span class="number">73%</span>
+                <span class="label">разработчиков теряют идеи из-за плохой коммуникации</span>
             </div>
             <div class="stat-card">
-                <span class="number">30%</span>
-                <span class="label">рост зарплаты после улучшения коммуникации</span>
+                <span class="number">+40%</span>
+                <span class="label">к зарплате после прокачки soft skills</span>
             </div>
         </div>
     </section>
 
     <!-- Free Lesson -->
     <section class="free-lesson" id="free-lesson">
-        <h2>🎁 Бесплатный мини-урок</h2>
-        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-            Получите первый урок курса прямо сейчас и научитесь переводить технические термины в бизнес-ценности
+        <h2>🎁 Попробуйте прямо сейчас</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+            Получите первый урок и научитесь переводить техническое в денежное за 15 минут
         </p>
         
         <div class="lesson-preview">
-            <h4>Урок 1.1: "Два языка одной профессии"</h4>
-            <p><strong>Вы узнаете:</strong></p>
+            <h4>Урок 1: "Два языка одной профессии"</h4>
+            <p style="margin-bottom: 1.5rem;"><strong>Что внутри:</strong></p>
             <ul>
-                <li>Фреймворк перевода "Техника → Бизнес → Выгода"</li>
-                <li>20 готовых переводов технических терминов</li>
-                <li>Как объяснить рефакторинг через бизнес-метрики</li>
-                <li>Практические примеры и упражнения</li>
+                <li>Фреймворк "Техника → Бизнес → Прибыль"</li>
+                <li>15 готовых переводов технических терминов</li>
+                <li>Как превратить рефакторинг в рост выручки</li>
+                <li>Реальный кейс: от "нужно почистить код" к "экономим $50k в год"</li>
             </ul>
-            
-            <p style="margin-top: 1rem;"><strong>Пример:</strong></p>
-            <p style="font-style: italic;">
-                "Нужно отрефакторить legacy код" → 
-                "Оптимизация кода ускорит разработку на 30% и снизит количество багов"
-            </p>
         </div>
         
-        <a href="#order" class="cta-button" style="background: var(--secondary); font-size: 1.1rem;">
-            Получить бесплатный урок
+        <a href="#order" class="cta-button" style="background: linear-gradient(135deg, var(--accent-gold), var(--accent-coral)); color: white; font-size: 1.2rem; transform: rotate(1deg);">
+            ⚡ Получить бесплатный урок
         </a>
     </section>
 
     <!-- CTA Section -->
     <section class="cta-section" id="order">
-        <h2>Предзаказ со скидкой 50%</h2>
-        <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-            Станьте одним из первых 10 студентов и получите курс за полцены
+        <h2 style="color: white;">Станьте переводчиком кода</h2>
+        <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+            Присоединяйтесь к первой волне студентов со скидкой 50%
         </p>
 
         <div class="price-block" style="margin-bottom: 2rem;">
@@ -664,25 +856,25 @@
             </div>
 
             <button type="submit" class="submit-button" id="submitButton">
-                🚀 Оформить предзаказ за $24
+                🚀 Забронировать место за $24
             </button>
         </form>
 
         <div class="guarantee">
-            <h4>💰 Гарантия возврата денег</h4>
-            <p>Если курс не поможет вам улучшить коммуникацию с бизнесом, мы вернем деньги в течение 30 дней. Без вопросов.</p>
+            <h4>💎 Гарантия качества</h4>
+            <p>Если курс не поможет улучшить коммуникацию с бизнесом, вернем деньги в течение 30 дней. Никаких вопросов.</p>
         </div>
 
-        <p style="margin-top: 2rem; opacity: 0.8;">
-            ⏰ Акция действует до конца недели. После этого цена будет $49.
+        <p style="margin-top: 3rem; opacity: 0.8; font-size: 1.1rem;">
+            ⏰ Специальная цена действует ограниченное время
         </p>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 CodeTalk. Курс для разработчиков, которые хотят расти в карьере.</p>
-        <p style="margin-top: 1rem; opacity: 0.7;">
-            Есть вопросы? Напишите нам: <a href="mailto:hello@codetalk.dev" style="color: var(--secondary);">hello@codetalk.dev</a>
+        <p>&copy; 2024 CodeTalk. Для разработчиков, которые хотят быть услышанными.</p>
+        <p style="margin-top: 1.5rem; opacity: 0.8;">
+            Вопросы? Пишите: <a href="mailto:hello@codetalk.dev" style="color: var(--accent-coral); text-decoration: none;">hello@codetalk.dev</a>
         </p>
     </footer>
 
@@ -753,7 +945,7 @@
                 errorMessage.scrollIntoView({ behavior: 'smooth' });
             } finally {
                 submitButton.disabled = false;
-                submitButton.textContent = '🚀 Оформить предзаказ за $24';
+                submitButton.textContent = '🚀 Забронировать место за $24';
             }
         });
 
