@@ -196,6 +196,82 @@
             align-items: center;
         }
 
+        /* Компонент рейтинга в пиксельном стиле */
+        .rating-component {
+            display: flex;
+            align-items: center;
+            background: var(--gradient-pixel);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            position: relative;
+            animation: rating-glow 4s ease-in-out infinite;
+            box-shadow: 
+                0 0 15px rgba(0, 255, 255, 0.3),
+                4px 4px 0px rgba(0,0,0,0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .rating-star {
+            color: var(--pixel-yellow);
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+            animation: star-twinkle 2s ease-in-out infinite;
+        }
+
+        .rating-score {
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+
+        .rating-count {
+            opacity: 0.9;
+            font-size: 0.55rem;
+        }
+
+        @keyframes rating-glow {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 15px rgba(0, 255, 255, 0.3),
+                    4px 4px 0px rgba(0,0,0,0.2);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 25px rgba(255, 0, 255, 0.5),
+                    4px 4px 0px rgba(0,0,0,0.3);
+            }
+        }
+
+        @keyframes star-twinkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        /* Responsive для рейтинга */
+        @media (max-width: 768px) {
+            .rating-component {
+                font-size: 0.55rem;
+                padding: 0.6rem 1rem;
+            }
+            
+            .rating-star {
+                font-size: 0.7rem;
+                margin-right: 0.3rem;
+            }
+            
+            .rating-count {
+                font-size: 0.45rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rating-component {
+                display: none; /* Скрываем на очень маленьких экранах */
+            }
+        }
+
         .logo {
             font-family: 'Press Start 2P', monospace;
             font-size: 1.2rem;
@@ -722,43 +798,6 @@
             100% { background-position: 100px 0; }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 8rem 1rem 4rem;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .blob {
-                display: none;
-            }
-
-            .logo {
-                font-size: 0.9rem;
-            }
-
-            .cta-button {
-                font-size: 0.6rem;
-                padding: 0.8rem 1.5rem;
-            }
-
-            .price {
-                font-size: 2rem;
-            }
-
-            .submit-button {
-                font-size: 0.7rem;
-            }
-
-            .pixel-decoration {
-                display: none;
-            }
-        }
-
         /* Стили для секции программы курса */
         .program-section {
             padding: 6rem 2rem;
@@ -1200,6 +1239,43 @@
             background-repeat: no-repeat;
             background-position: right 1rem center;
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 8rem 1rem 4rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .blob {
+                display: none;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .cta-button {
+                font-size: 0.6rem;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .price {
+                font-size: 2rem;
+            }
+
+            .submit-button {
+                font-size: 0.7rem;
+            }
+
+            .pixel-decoration {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1217,6 +1293,14 @@
     <header class="header">
         <nav class="nav">
             <div class="logo">DigoClasses</div>
+            
+            <!-- Компонент рейтинга -->
+            <div class="rating-component">
+                <span class="rating-star">★</span>
+                <span class="rating-score">4.9</span>
+                <span class="rating-count">(89 отзывов)</span>
+            </div>
+            
             <a href="#enroll" class="cta-button">▲ Join Course</a>
         </nav>
     </header>
@@ -1579,6 +1663,36 @@
                 }, 3000);
             }, 2000);
         });
+
+        // Анимация рейтинга с изменением количества отзывов
+        function animateRating() {
+            const ratingCount = document.querySelector('.rating-count');
+            const ratingComponent = document.querySelector('.rating-component');
+            if (!ratingCount || !ratingComponent) return;
+            
+            const baseCount = 89;
+            const variations = [
+                baseCount, 
+                baseCount + 1, 
+                baseCount + 2, 
+                baseCount + 3,
+                baseCount - 1
+            ];
+            
+            setInterval(() => {
+                const randomCount = variations[Math.floor(Math.random() * variations.length)];
+                ratingCount.textContent = `(${randomCount} отзывов)`;
+                
+                // Добавляем пиксельный glitch эффект
+                ratingComponent.style.transform = `translateX(${Math.random() * 2 - 1}px)`;
+                setTimeout(() => {
+                    ratingComponent.style.transform = 'translateX(0)';
+                }, 100);
+            }, 15000); // Каждые 15 секунд
+        }
+
+        // Запускаем анимацию рейтинга
+        document.addEventListener('DOMContentLoaded', animateRating);
 
         // Пиксельная анимация blob форм
         document.addEventListener('mousemove', (e) => {
