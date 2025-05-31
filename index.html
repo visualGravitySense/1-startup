@@ -1276,6 +1276,273 @@
                 display: none;
             }
         }
+
+        /* Enhanced Hero Badge */
+        .hero-badge {
+            background: var(--gradient-pixel);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            animation: badge-glow 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-pixel);
+            border-radius: 27px;
+            z-index: -1;
+            opacity: 0.5;
+            animation: badge-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badge-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.5); }
+        }
+
+        @keyframes badge-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        /* Enhanced highlight text */
+        .highlight-text {
+            background: var(--gradient-pixel);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.9em;
+            animation: text-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes text-glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3) drop-shadow(0 0 5px rgba(0, 255, 255, 0.5)); }
+        }
+
+        /* Enhanced loading bar */
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: var(--gradient-pixel);
+            width: 0%;
+            animation: loading-fill 3s ease-out forwards;
+        }
+
+        @keyframes loading-fill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Enhanced CTA Section */
+        .hero-cta-section {
+            display: flex;
+            gap: 1.5rem;
+            margin: 3rem 0;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button-enhanced {
+            background: linear-gradient(135deg, var(--accent-figma), var(--accent-rose));
+            color: white;
+            padding: 1.5rem 2.5rem;
+            border: none;
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            box-shadow: 
+                6px 6px 0px var(--accent-purple),
+                12px 12px 0px rgba(0,0,0,0.1);
+            min-width: 280px;
+            justify-content: space-between;
+        }
+
+        .cta-button-enhanced:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 
+                9px 9px 0px var(--accent-purple),
+                15px 15px 0px rgba(0,0,0,0.2);
+        }
+
+        .button-price {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+        }
+
+        .cta-button-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+            padding: 1.2rem 2rem;
+            border: 2px solid var(--accent-purple);
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--accent-purple);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Course Highlights */
+        .course-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .highlight-badge {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 2px solid var(--accent-mint);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .highlight-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
+            border-color: var(--accent-teal);
+        }
+
+        .badge-icon {
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-sage);
+            border-radius: 50%;
+        }
+
+        .badge-content {
+            flex: 1;
+        }
+
+        .badge-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .badge-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Trust Indicators */
+        .trust-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 4rem 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .trust-number {
+            display: block;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 2rem;
+            background: var(--gradient-pixel);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: number-pulse 3s ease-in-out infinite;
+        }
+
+        .trust-text {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes number-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .hero-cta-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .cta-button-enhanced {
+                min-width: auto;
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .course-highlights {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .trust-indicators {
+                gap: 2rem;
+            }
+            
+            .trust-number {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1307,55 +1574,103 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <!-- Decorative elements -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="pixel-decoration pixel-decoration-1"></div>
+        <div class="pixel-decoration pixel-decoration-2"></div>
+        <div class="pixel-decoration pixel-decoration-3"></div>
+        
         <div class="hero-content">
-            <h1>Прототипирование в Figma<br>и UX/UI дизайн</h1>
-            <p class="subtitle">Интенсивный курс для тех, кто желает начать карьеру в IT-сфере без навыков программирования</p>
+            <div class="hero-badge">
+                <span class="badge-text">✨ НОВЫЙ КУРС 2025</span>
+            </div>
             
+            <h1>
+                UX/UI Дизайн &<br>
+                Прототипирование в Figma
+            </h1>
+            
+            <p class="subtitle">
+                Интенсивный курс для создания пользовательских интерфейсов. 
+                От исследований до готового продукта за 3 месяца. 
+                <span class="highlight-text">252 академических часа</span> качественного обучения.
+            </p>
+            
+            <!-- Pixel status bar with dynamic content -->
             <div class="pixel-status-bar">
-                LOADING COURSE INFO... [████████████] 252 AK.H.
-            </div>
-
-            <!-- Основная информация о курсе -->
-            <div class="course-info-grid">
-                <div class="info-card">
-                    <div class="pixel-icon duration"></div>
-                    <h3>Длительность</h3>
-                    <p><strong>3 месяца</strong><br>252 академических часа</p>
-                    <div class="info-detail">126 ак.ч. аудиторных + 126 ак.ч. самостоятельной работы</div>
-                </div>
-                
-                <div class="info-card">
-                    <div class="pixel-icon schedule"></div>
-                    <h3>Расписание</h3>
-                    <p><strong>Пн, Ср, Пт</strong><br>17:45 - 21:00</p>
-                    <div class="info-detail">Аудиторный формат, группы 6-10 человек</div>
-                </div>
-                
-                <div class="info-card">
-                    <div class="pixel-icon price"></div>
-                    <h3>Стоимость</h3>
-                    <p><strong>€2008.19</strong><br>+ НСО</p>
-                    <div class="info-detail">Возможна рассрочка, при необходимости выдается ноутбук</div>
+                <span id="statusText">ЗАГРУЗКА КУРСА...</span>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
                 </div>
             </div>
-
-            <!-- Цель и результат курса -->
-            <div class="course-goals">
-                <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.1rem; margin-bottom: 2rem; text-align: center; color: var(--accent-figma);">
-                    ▲ ЦЕЛЬ КУРСА
-                </h2>
-                <div class="goal-content">
-                    <p>Предоставление основных теоретических знаний в области <strong>UX (User Experience)</strong> и базовых практических навыков в области <strong>UI (User Interface)</strong>, необходимых для разработки дизайна веб-сайтов и пользовательских интерфейсов.</p>
-                    <div class="result-highlight">
-                        <strong>При успешном выполнении заданий курса вы соберёте кейсы для первого портфолио и сможете начать самостоятельную работу в сфере дизайна интерфейсов.</strong>
+            
+            <!-- Enhanced CTA section -->
+            <div class="hero-cta-section">
+                <div class="cta-primary">
+                    <a href="#enrollment" class="cta-button-enhanced" onclick="scrollToEnrollment()">
+                        <span class="button-icon">▲</span>
+                        <span class="button-text">ЗАПИСАТЬСЯ НА КУРС</span>
+                        <span class="button-price">€2008.19</span>
+                    </a>
+                </div>
+                
+                <div class="cta-secondary">
+                    <a href="#course-info" class="cta-button-secondary" onclick="scrollToCourseInfo()">
+                        <span class="button-icon">▶</span>
+                        <span class="button-text">УЗНАТЬ ПОДРОБНЕЕ</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Course highlights badges -->
+            <div class="course-highlights">
+                <div class="highlight-badge">
+                    <div class="badge-icon">📅</div>
+                    <div class="badge-content">
+                        <div class="badge-title">СТАРТ КУРСА</div>
+                        <div class="badge-value">28 АПРЕЛЯ</div>
                     </div>
+                </div>
+                
+                <div class="highlight-badge">
+                    <div class="badge-icon">👥</div>
+                    <div class="badge-content">
+                        <div class="badge-title">ГРУППЫ</div>
+                        <div class="badge-value">6-10 ЧЕЛОВЕК</div>
+                    </div>
+                </div>
+                
+                <div class="highlight-badge">
+                    <div class="badge-icon">🎯</div>
+                    <div class="badge-content">
+                        <div class="badge-title">ФОРМАТ</div>
+                        <div class="badge-value">ОЧНО + ПРАКТИКА</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trust indicators -->
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <span class="trust-number">252</span>
+                    <span class="trust-text">ЧАСА ОБУЧЕНИЯ</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-number">8</span>
+                    <span class="trust-text">МОДУЛЕЙ</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-number">100%</span>
+                    <span class="trust-text">ПРАКТИКИ</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Программа курса -->
-    <section class="program-section">
+    <section class="program-section" id="course-info">
         <div class="program-content">
             <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-purple);">
                 ▲ ПРОГРАММА КУРСА
@@ -1525,7 +1840,7 @@
     </section>
 
     <!-- Даты и запись -->
-    <section class="enrollment-section">
+    <section class="enrollment-section" id="enrollment">
         <div class="enrollment-content">
             <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-gold);">
                 ▲ ЗАПИСЬ НА КУРС
@@ -1632,6 +1947,157 @@
     </footer>
 
     <script>
+        // Enhanced pixel status animation with course loading simulation
+        function animateStatusText() {
+            const statusText = document.getElementById('statusText');
+            const statuses = [
+                'ЗАГРУЗКА КУРСА...',
+                'ПРОВЕРКА МОДУЛЕЙ...',
+                'ИНИЦИАЛИЗАЦИЯ FIGMA...',
+                'ПОДГОТОВКА UX/UI...',
+                'КУРС ГОТОВ К ЗАПУСКУ!',
+                'ЗАПИСЫВАЙТЕСЬ СЕЙЧАС!'
+            ];
+            
+            let currentIndex = 0;
+            
+            const interval = setInterval(() => {
+                statusText.textContent = statuses[currentIndex];
+                currentIndex++;
+                
+                if (currentIndex >= statuses.length) {
+                    clearInterval(interval);
+                    // Final status with special styling
+                    setTimeout(() => {
+                        statusText.innerHTML = '✓ СИСТЕМА ГОТОВА К ОБУЧЕНИЮ';
+                        statusText.style.color = 'var(--pixel-green)';
+                    }, 500);
+                }
+            }, 500);
+        }
+
+        // Smooth scroll functions for enhanced CTA buttons
+        function scrollToEnrollment() {
+            const enrollmentSection = document.querySelector('#enrollment') || document.querySelector('.enrollment-section');
+            if (enrollmentSection) {
+                enrollmentSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Add pixel glitch effect to the enrollment form
+                setTimeout(() => {
+                    const form = enrollmentSection.querySelector('.enrollment-form');
+                    if (form) {
+                        form.style.animation = 'pixel-glitch 0.5s ease-out';
+                        setTimeout(() => {
+                            form.style.animation = '';
+                        }, 500);
+                    }
+                }, 800);
+            }
+        }
+
+        function scrollToCourseInfo() {
+            const courseInfoSection = document.querySelector('#course-info') || document.querySelector('.course-goals');
+            if (courseInfoSection) {
+                courseInfoSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Enhanced trust indicators animation
+        function animateTrustNumbers() {
+            const trustNumbers = document.querySelectorAll('.trust-number');
+            const targetValues = [252, 8, 100];
+            
+            trustNumbers.forEach((number, index) => {
+                const targetValue = targetValues[index];
+                let currentValue = 0;
+                const increment = targetValue / 50;
+                
+                const counter = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= targetValue) {
+                        currentValue = targetValue;
+                        clearInterval(counter);
+                    }
+                    
+                    if (index === 2) {
+                        number.textContent = Math.floor(currentValue) + '%';
+                    } else {
+                        number.textContent = Math.floor(currentValue);
+                    }
+                }, 40);
+            });
+        }
+
+        // Enhanced course highlights hover effects
+        function initCourseHighlights() {
+            const highlights = document.querySelectorAll('.highlight-badge');
+            
+            highlights.forEach(badge => {
+                badge.addEventListener('mouseenter', () => {
+                    const icon = badge.querySelector('.badge-icon');
+                    icon.style.transform = 'scale(1.2) rotate(10deg)';
+                    icon.style.transition = 'all 0.3s ease';
+                });
+                
+                badge.addEventListener('mouseleave', () => {
+                    const icon = badge.querySelector('.badge-icon');
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+        }
+
+        // Enhanced loading and initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start status animation
+            setTimeout(animateStatusText, 1000);
+            
+            // Start trust numbers animation when they're in view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateTrustNumbers();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            const trustSection = document.querySelector('.trust-indicators');
+            if (trustSection) {
+                observer.observe(trustSection);
+            }
+            
+            // Initialize course highlights
+            initCourseHighlights();
+            
+            // Original functions
+            animateRating();
+        });
+
+        // Add pixel glitch keyframe if not exists
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pixel-glitch {
+                0% { transform: translateX(0); }
+                10% { transform: translateX(-2px) scale(1.01); }
+                20% { transform: translateX(2px) scale(0.99); }
+                30% { transform: translateX(-1px) scale(1.01); }
+                40% { transform: translateX(1px) scale(0.99); }
+                50% { transform: translateX(-2px) scale(1.01); }
+                60% { transform: translateX(2px) scale(0.99); }
+                70% { transform: translateX(-1px) scale(1.01); }
+                80% { transform: translateX(1px) scale(0.99); }
+                90% { transform: translateX(0) scale(1); }
+                100% { transform: translateX(0) scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
         // Пиксельная анимация формы
         document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
             e.preventDefault();
